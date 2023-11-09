@@ -1,0 +1,54 @@
+version: '3'
+services:
+
+  db_coffeeshop:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: "coffeeshop@2023"
+      MYSQL_DATABASE: "db_coffeeshop"
+      TZ: "America/Sao_Paulo"
+    restart: always
+    container_name: db_coffeeshop
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/config:/etc/mysql/conf.d
+    command: 
+      - mysqld
+      - --default-time-zone=-03:00
+    networks:
+      - net_coffeeshop
+
+  endpoints:
+    image: ubuntu:latest
+    restart: unless-stopped
+    container_name: endpoints
+    volumes:
+      - ./endpoints:/endpoints
+    ports:
+      - 5550:5550
+    command: /bin/bash -c "apt-get update && apt-get install -y python3 python3-pip python3-dev && pip3 install flask mysql-connector-python && python3 /endpoints/app.py"
+    depends_on:
+      - "db_coffeeshop"
+    networks:
+      - net_coffeeshop
+
+  portainer:
+    image: portainer/portainer
+    environment:
+      TZ: "America/Sao_Paulo"
+    restart: always
+    container_name: portainer
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer/data:/data
+    networks:
+      - net_coffeeshop
+
+networks:
+  net_coffeeshop:
+    name: net_coffeeshop
+    driver: bridge

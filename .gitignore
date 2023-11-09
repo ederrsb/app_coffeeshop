@@ -1,0 +1,24 @@
+# Arquivos e diretórios relacionados a containers e imagens Docker
+.docker/
+*.dockerfile
+*.log
+*.pid
+*.tar
+*.sock
+*.env
+
+# Diretórios de volumes (dados persistentes)
+data/
+logs/
+
+# Arquivos de configuração específicos do ambiente
+.env
+
+# Diretórios e arquivos gerados automaticamente
+__pycache__/
+*.pyc
+*.pyo
+
+# Arquivos temporários e caches
+*.tmp
+*.swp
