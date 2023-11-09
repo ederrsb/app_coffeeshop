@@ -33,6 +33,8 @@ def obter_venda(id_venda):
 def obter_venda_item():
     tipo = request.args.get('tipo')
     id_venda = request.args.get('id_venda')
+    id_cliente = request.args.get('id_cliente')
+    data = request.args.get('data')
 
     # Inicializa uma lista de condições para a cláusula WHERE
     conditions = []
@@ -41,9 +43,14 @@ def obter_venda_item():
     if tipo:
         conditions.append("and case when vi.id_item is not null then 'Produto' else 'Assinatura' end = %s")
 
-    # Adiciona a condição para o parâmetro 'id_venda' se ele estiver presente
     if id_venda:
         conditions.append("and v.id_venda = %s")
+
+    if id_cliente:
+        conditions.append("and v.id_cliente = %s")
+
+    if data:
+        conditions.append("and v.data = %s")
 
     # Constrói a cláusula WHERE combinando as condições com 'AND'
     where_clause = "".join(conditions) if conditions else ""
@@ -78,7 +85,7 @@ def obter_venda_item():
     """
 
     # Parâmetros a serem passados na consulta
-    params = [tipo, id_venda]
+    params = [tipo, id_venda, id_cliente, data]
 
     # Remove None da lista de parâmetros para os que não foram fornecidos
     params = [param for param in params if param is not None]
