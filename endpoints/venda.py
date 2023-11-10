@@ -99,3 +99,66 @@ def obter_venda_item():
         return jsonify(vendas_itens)
     else:
         return jsonify({'message': 'Venda não encontrada'}), 404
+    
+@venda_bp.route('/vendas', methods=['POST'])
+def inserir_venda():
+    dados_venda = request.get_json()
+
+    query = """
+                INSERT INTO venda (id_cliente, id_funcionario, data, valor_total_venda, forma_pagamento, status_pagamento)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+
+    params = (
+        dados_venda['id_cliente'],
+        dados_venda['id_funcionario'],
+        dados_venda['data'],
+        dados_venda['valor_total_venda'],
+        dados_venda['forma_pagamento'],
+        dados_venda['status_pagamento']
+    )
+
+    conexao.execute_query(query, params)
+    conexao.connection.commit()
+
+    return jsonify({'message': 'Venda inserida com sucesso'}), 201
+
+@venda_bp.route('/vendas/<int:id_venda>', methods=['PUT'])
+def atualizar_venda(id_venda):
+    dados_venda = request.get_json()
+
+    query = """
+                UPDATE venda
+                   SET id_cliente = %s, 
+                       id_funcionario = %s, 
+                       data = %s,
+                       valor_total_venda = %s, 
+                       forma_pagamento = %s, 
+                       status_pagamento = %s
+                 WHERE id_venda = %s
+            """
+
+    params = (
+        dados_venda['id_cliente'],
+        dados_venda['id_funcionario'],
+        dados_venda['data'],
+        dados_venda['valor_total_venda'],
+        dados_venda['forma_pagamento'],
+        dados_venda['status_pagamento'],
+        id_venda
+    )
+
+    conexao.execute_query(query, params)
+    conexao.connection.commit()
+
+    return jsonify({'message': 'Venda atualizada com sucesso'}), 200
+
+@venda_bp.route('/vendas/<int:id_venda>', methods=['DELETE'])
+def deletar_venda(id_venda):
+    query = "DELETE FROM venda WHERE id_venda = %s"
+    params = (id_venda,)
+
+    conexao.execute_query(query, params)
+    conexao.connection.commit()
+
+    return jsonify({'message': 'Venda deletada com sucesso'}), 200
