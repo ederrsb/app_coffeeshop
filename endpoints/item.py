@@ -22,13 +22,13 @@ def obter_itens():
         conditions.append("and a.id_item = %s")
 
     if desc_item:
-        conditions.append("and a.descricao like %s")
+        conditions.append("and a.desc_item like %s")
 
     if id_item_categoria:
         conditions.append("and a.id_item_categoria = %s")
 
     if desc_categoria:
-        conditions.append("and a.descricao like %s")
+        conditions.append("and a.desc_categoria like %s")
 
     if status:
         conditions.append("and a.status = %s")
@@ -60,7 +60,13 @@ def obter_itens():
     """
 
     # Parâmetros a serem passados na consulta
-    params = [id_item, desc_item, id_item_categoria, desc_categoria, status, sn_saldo]
+    params = [id_item, id_item_categoria, status, sn_saldo]
+
+    if desc_item:
+        params.append(f"%{desc_item}%")
+
+    if desc_categoria:
+        params.append(f"%{desc_categoria}%")
 
     # Remove None da lista de parâmetros para os que não foram fornecidos
     params = [param for param in params if param is not None]
