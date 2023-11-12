@@ -1,12 +1,95 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
+from logger import logger  # Certifique-se de importar o logger adequado
 
 item_bp = Blueprint('item', __name__)
-
 conexao = Conexao()
 
 @item_bp.route('/itens', methods=['GET'])
 def obter_itens():
+    try:
+        query = 'SELECT * FROM Item'
+        resultado = conexao.execute_query(query)
+
+        if resultado:
+            colunas = [column[0] for column in conexao.cursor.description]
+            itens = [dict(zip(colunas, item)) for item in resultado]
+            return jsonify(itens)
+        else:
+            return jsonify([])
+    except Exception as e:
+        logger.error(f"Erro ao obter itens: {str(e)}")
+        return jsonify({'message': 'Erro ao obter itens'}), 500
+
+@item_bp.route('/itens', methods=['POST'])
+def inserir_item():
+    try:
+        dados_item = request.get_json()
+
+        query = """
+                INSERT INTO db_coffeeshop.Item (descricao, unid_medida, id_item_categoria, valor_unitario, data_atualizacao, status)
+                VALUES (%s, %s, %s, %s, now(), 'A')
+                """
+
+        params = (
+            dados_item['descricao'],
+            dados_item['unid_medida'],
+            dados_item['id_item_categoria'],
+            dados_item['valor_unitario']
+        )
+
+        conexao.execute_query(query, params)
+        conexao.connection.commit()
+
+        return jsonify({'message': 'Item inserido com sucesso'}), 201
+    except Exception as e:
+        logger.error(f"Erro ao inserir item: {str(e)}")
+        return jsonify({'message': 'Erro ao inserir item'}), 500
+
+@item_bp.route('/itens/<int:id_item>', methods=['PUT'])
+def atualizar_item(id_item):
+    try:
+        dados_item = request.get_json()
+
+        query = """
+                UPDATE db_coffeeshop.Item
+                SET descricao = %s, unid_medida = %s, id_item_categoria = %s, valor_unitario = %s, data_atualizacao = now(), status = %s
+                WHERE id_item = %s
+                """
+
+        params = (
+            dados_item['descricao'],
+            dados_item['unid_medida'],
+            dados_item['id_item_categoria'],
+            dados_item['valor_unitario'],
+            dados_item['status'],
+            id_item
+        )
+
+        conexao.execute_query(query, params)
+        conexao.connection.commit()
+
+        return jsonify({'message': 'Item atualizado com sucesso'}), 200
+    except Exception as e:
+        logger.error(f"Erro ao atualizar item: {str(e)}")
+        return jsonify({'message': 'Erro ao atualizar item'}), 500
+
+@item_bp.route('/itens/<int:id_item>', methods=['DELETE'])
+def deletar_item(id_item):
+    try:
+        query = "DELETE FROM db_coffeeshop.Item WHERE id_item = %s"
+        params = (id_item,)
+
+        conexao.execute_query(query, params)
+        conexao.connection.commit()
+
+        return jsonify({'message': 'Item deletado com sucesso'}), 200
+    except Exception as e:
+        logger.error(f"Erro ao deletar item: {str(e)}")
+        return jsonify({'message': 'Erro ao deletar item'}), 500
+
+@item_bp.route('/itens2', methods=['GET'])
+def obter_itens2():
     id_item = request.args.get('id_item')
     desc_item = request.args.get('desc_item')
     id_item_categoria = request.args.get('id_item_categoria')
