@@ -27,9 +27,9 @@ def inserir_conta_estoque():
         dados_conta_estoque = request.get_json()
 
         query = """
-            INSERT INTO db_coffeeshop.conta_estoque (descricao)
-            VALUES (%s)
-        """
+                    INSERT INTO conta_estoque (descricao)
+                    VALUES (%s)
+                """
 
         params = (
             dados_conta_estoque['descricao'],
@@ -49,10 +49,10 @@ def atualizar_conta_estoque(id_conta_estoque):
         dados_conta_estoque = request.get_json()
 
         query = """
-            UPDATE db_coffeeshop.conta_estoque
-            SET descricao = %s
-            WHERE id_conta_estoque = %s
-        """
+                    UPDATE conta_estoque
+                    SET descricao = %s
+                    WHERE id_conta_estoque = %s
+                """
 
         params = (
             dados_conta_estoque['descricao'],
@@ -70,7 +70,7 @@ def atualizar_conta_estoque(id_conta_estoque):
 @conta_estoque_bp.route('/contas_estoque/<int:id_conta_estoque>', methods=['DELETE'])
 def deletar_conta_estoque(id_conta_estoque):
     try:
-        query = "DELETE FROM db_coffeeshop.conta_estoque WHERE id_conta_estoque = %s"
+        query = "DELETE FROM conta_estoque WHERE id_conta_estoque = %s"
         params = (id_conta_estoque,)
 
         conexao.execute_query(query, params)

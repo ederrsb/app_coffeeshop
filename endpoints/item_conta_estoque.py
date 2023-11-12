@@ -27,9 +27,9 @@ def inserir_item_conta_estoque():
         dados_item_conta_estoque = request.get_json()
 
         query = """
-            INSERT INTO item_conta_estoque (id_item, id_conta_estoque, saldo, qtde_minima, qtde_maxima, data_atualizacao)
-            VALUES (%s, %s, %s, %s, %s, now())
-        """
+                    INSERT INTO item_conta_estoque (id_item, id_conta_estoque, saldo, qtde_minima, qtde_maxima, data_atualizacao)
+                    VALUES (%s, %s, %s, %s, %s, now())
+                """
 
         params = (
             dados_item_conta_estoque['id_item'],
