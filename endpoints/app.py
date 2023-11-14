@@ -8,6 +8,8 @@ from funcao import funcao_bp
 from cliente import cliente_bp
 from cliente_endereco import cliente_endereco_bp
 from item import item_bp
+from funcionario import funcionario_bp
+from usuario import usuario_bp
 from logger import logger  # Importe o logger do logger.py
 
 app = Flask(__name__)
@@ -20,6 +22,8 @@ app.register_blueprint(item_categoria_bp, item_categoria='')
 app.register_blueprint(funcao_bp, funcao='')
 app.register_blueprint(cliente_bp, cliente='')
 app.register_blueprint(cliente_endereco_bp, cliente_endereco='')
+app.register_blueprint(funcionario_bp, funcionario='')
+app.register_blueprint(usuario_bp, usuario='')
 
 if __name__ == '__main__':
     app.run(port=5550, host='endpoints', debug=True)
