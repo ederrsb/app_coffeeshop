@@ -1,14 +1,15 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
-import logging
 from logger import logger
+from login import verifica_token
 
 item_categoria_bp = Blueprint('item_categoria', __name__)
 
 conexao = Conexao()
 
 @item_categoria_bp.route('/itens_categoria', methods=['GET'])
-def obter_itens_categoria():
+@verifica_token
+def obter_itens_categoria(payload):
     try:
         query = 'SELECT * FROM item_categoria'
         resultado = conexao.execute_query(query)
@@ -24,7 +25,8 @@ def obter_itens_categoria():
         return jsonify({'message': 'Erro ao obter categorias de itens'}), 500
 
 @item_categoria_bp.route('/itens_categoria', methods=['POST'])
-def inserir_item_categoria():
+@verifica_token
+def inserir_item_categoria(payload):
     try:
         dados_item_categoria = request.get_json()
 
@@ -46,7 +48,8 @@ def inserir_item_categoria():
         return jsonify({'message': 'Erro ao inserir categoria de item'}), 500
 
 @item_categoria_bp.route('/itens_categoria/<int:id_item_categoria>', methods=['PUT'])
-def atualizar_item_categoria(id_item_categoria):
+@verifica_token
+def atualizar_item_categoria(payload, id_item_categoria):
     try:
         dados_item_categoria = request.get_json()
 
@@ -70,7 +73,8 @@ def atualizar_item_categoria(id_item_categoria):
         return jsonify({'message': 'Erro ao atualizar categoria de item'}), 500
 
 @item_categoria_bp.route('/itens_categoria/<int:id_item_categoria>', methods=['DELETE'])
-def deletar_item_categoria(id_item_categoria):
+@verifica_token
+def deletar_item_categoria(payload, id_item_categoria):
     try:
         query = "DELETE FROM db_coffeeshop.item_categoria WHERE id_item_categoria = %s"
         params = (id_item_categoria,)

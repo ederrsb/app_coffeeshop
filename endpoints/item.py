@@ -1,12 +1,14 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
-from logger import logger  # Certifique-se de importar o logger adequado
+from logger import logger
+from login import verifica_token
 
 item_bp = Blueprint('item', __name__)
 conexao = Conexao()
 
 @item_bp.route('/itens', methods=['GET'])
-def obter_itens():
+@verifica_token
+def obter_itens(payload):
     try:
         query = 'SELECT * FROM Item'
         resultado = conexao.execute_query(query)
@@ -22,7 +24,8 @@ def obter_itens():
         return jsonify({'message': 'Erro ao obter itens'}), 500
 
 @item_bp.route('/itens', methods=['POST'])
-def inserir_item():
+@verifica_token
+def inserir_item(payload):
     try:
         dados_item = request.get_json()
 
@@ -47,7 +50,8 @@ def inserir_item():
         return jsonify({'message': 'Erro ao inserir item'}), 500
 
 @item_bp.route('/itens/<int:id_item>', methods=['PUT'])
-def atualizar_item(id_item):
+@verifica_token
+def atualizar_item(payload, id_item):
     try:
         dados_item = request.get_json()
 
@@ -75,7 +79,8 @@ def atualizar_item(id_item):
         return jsonify({'message': 'Erro ao atualizar item'}), 500
 
 @item_bp.route('/itens/<int:id_item>', methods=['DELETE'])
-def deletar_item(id_item):
+@verifica_token
+def deletar_item(payload, id_item):
     try:
         query = "DELETE FROM db_coffeeshop.Item WHERE id_item = %s"
         params = (id_item,)
@@ -89,7 +94,8 @@ def deletar_item(id_item):
         return jsonify({'message': 'Erro ao deletar item'}), 500
 
 @item_bp.route('/itens2', methods=['GET'])
-def obter_itens2():
+@verifica_token
+def obter_itens2(payload):
     id_item = request.args.get('id_item')
     desc_item = request.args.get('desc_item')
     id_item_categoria = request.args.get('id_item_categoria')

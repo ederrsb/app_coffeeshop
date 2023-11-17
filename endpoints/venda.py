@@ -1,14 +1,14 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
-import logging
 from logger import logger
+from login import verifica_token
 
 venda_bp = Blueprint('venda', __name__)
-
 conexao = Conexao()
 
 @venda_bp.route('/vendas', methods=['GET'])
-def obter_vendas():
+@verifica_token
+def obter_vendas(payload):
     try:
         query = 'SELECT * FROM venda'
         resultado = conexao.execute_query(query)
@@ -24,7 +24,8 @@ def obter_vendas():
         return jsonify({'message': 'Erro ao obter vendas'}), 500
 
 @venda_bp.route('/vendas/<int:id_venda>', methods=['GET'])
-def obter_venda(id_venda):
+@verifica_token
+def obter_venda(payload, id_venda):
     try:
         query = 'SELECT * FROM venda WHERE id_venda = %s'
         resultado = conexao.execute_query(query, (id_venda,))
@@ -39,8 +40,9 @@ def obter_venda(id_venda):
         logger.error(f"Erro ao obter venda: {str(e)}")
         return jsonify({'message': 'Erro ao obter venda'}), 500
     
-@venda_bp.route('/vendas_item', methods=['GET'])
-def obter_venda_item():
+@venda_bp.route('/vendas_itens', methods=['GET'])
+@verifica_token
+def obter_venda_item(payload):
     try:
         tipo = request.args.get('tipo')
         id_venda = request.args.get('id_venda')
@@ -106,7 +108,7 @@ def obter_venda_item():
 
         if resultado:
             colunas = [column[0] for column in conexao.cursor.description]
-            vendas_itens = [dict(zip(colunas, vendas_item)) for vendas_item in resultado]
+            vendas_itens = [dict(zip(colunas, vendas_itens)) for vendas_itens in resultado]
             return jsonify(vendas_itens)
         else:
             return jsonify({'message': 'Item de Venda não encontrado'}), 404
@@ -115,7 +117,8 @@ def obter_venda_item():
         return jsonify({'message': 'Erro ao obter item das vendas'}), 500
     
 @venda_bp.route('/vendas', methods=['POST'])
-def inserir_venda():
+@verifica_token
+def inserir_venda(payload):
     try:
         dados_venda = request.get_json()
 
@@ -142,7 +145,8 @@ def inserir_venda():
         return jsonify({'message': 'Erro ao inserir venda'}), 500
 
 @venda_bp.route('/vendas/<int:id_venda>', methods=['PUT'])
-def atualizar_venda(id_venda):
+@verifica_token
+def atualizar_venda(payload, id_venda):
     try:
         dados_venda = request.get_json()
 
@@ -176,7 +180,8 @@ def atualizar_venda(id_venda):
         return jsonify({'message': 'Erro ao atualizar venda'}), 500
 
 @venda_bp.route('/vendas/<int:id_venda>', methods=['DELETE'])
-def deletar_venda(id_venda):
+@verifica_token
+def deletar_venda(payload, id_venda):
     try:
         query = "DELETE FROM venda WHERE id_venda = %s"
         params = (id_venda,)
@@ -190,7 +195,8 @@ def deletar_venda(id_venda):
         return jsonify({'message': 'Erro ao excluir venda'}), 500
 
 @venda_bp.route('/vendas_itens', methods=['POST'])
-def inserir_venda_item():
+@verifica_token
+def inserir_venda_item(payload):
     try:
         dados_venda_item = request.get_json()
 
@@ -219,7 +225,8 @@ def inserir_venda_item():
         return jsonify({'message': 'Erro ao inserir item da venda'}), 500
 
 @venda_bp.route('/vendas_itens/<int:id_venda>/<int:item>', methods=['PUT'])
-def atualizar_venda_item(id_venda, item):
+@verifica_token
+def atualizar_venda_item(payload, id_venda, item):
     try:
         dados_venda_item = request.get_json()
 
@@ -254,7 +261,8 @@ def atualizar_venda_item(id_venda, item):
         return jsonify({'message': 'Erro ao atualizar item da venda'}), 500
 
 @venda_bp.route('/vendas_itens/<int:id_venda>/<int:item>', methods=['DELETE'])
-def deletar_venda_item(id_venda, item):
+@verifica_token
+def deletar_venda_item(payload, id_venda, item):
     try:
         query = "DELETE FROM venda_item WHERE id_venda = %s AND item = %s"
         params = (id_venda, item)

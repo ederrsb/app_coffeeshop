@@ -30,7 +30,7 @@ services:
       - ./endpoints:/endpoints
     ports:
       - 5550:5550
-    command: /bin/bash -c "pip install --upgrade pip flask mysql-connector-python bcrypt && python /endpoints/app.py"
+    command: /bin/bash -c "pip install --upgrade pip flask mysql-connector-python bcrypt && pip install PyJWT && python /endpoints/app.py"
     depends_on:
       - "db_coffeeshop"
     networks:

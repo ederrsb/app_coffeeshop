@@ -1,14 +1,15 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
-import logging
 from logger import logger
+from login import verifica_token
 
 cliente_bp = Blueprint('cliente', __name__)
 
 conexao = Conexao()
 
 @cliente_bp.route('/clientes', methods=['GET'])
-def obter_clientes():
+@verifica_token
+def obter_clientes(payload):
     try:
         query = 'SELECT * FROM cliente'
         resultado = conexao.execute_query(query)
@@ -24,7 +25,8 @@ def obter_clientes():
         return jsonify({'message': 'Erro ao obter clientes'}), 500
 
 @cliente_bp.route('/clientes', methods=['POST'])
-def inserir_cliente():
+@verifica_token
+def inserir_cliente(payload):
     try:
         dados_cliente = request.get_json()
 
@@ -51,7 +53,8 @@ def inserir_cliente():
         return jsonify({'message': 'Erro ao inserir cliente'}), 500
 
 @cliente_bp.route('/clientes/<int:id_cliente>', methods=['PUT'])
-def atualizar_cliente(id_cliente):
+@verifica_token
+def atualizar_cliente(payload, id_cliente):
     try:
         dados_cliente = request.get_json()
 
@@ -80,7 +83,8 @@ def atualizar_cliente(id_cliente):
         return jsonify({'message': 'Erro ao atualizar cliente'}), 500
 
 @cliente_bp.route('/clientes/<int:id_cliente>', methods=['DELETE'])
-def deletar_cliente(id_cliente):
+@verifica_token
+def deletar_cliente(payload, id_cliente):
     try:
         query = "DELETE FROM db_coffeeshop.cliente WHERE id_cliente = %s"
         params = (id_cliente,)

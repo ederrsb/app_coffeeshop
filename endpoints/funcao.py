@@ -1,14 +1,15 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
-import logging
 from logger import logger
+from login import verifica_token
 
 funcao_bp = Blueprint('funcao', __name__)
 
 conexao = Conexao()
 
 @funcao_bp.route('/funcoes', methods=['GET'])
-def obter_funcoes():
+@verifica_token
+def obter_funcoes(payload):
     try:
         query = 'SELECT * FROM funcao'
         resultado = conexao.execute_query(query)
@@ -24,7 +25,8 @@ def obter_funcoes():
         return jsonify({'message': 'Erro ao obter funções'}), 500
 
 @funcao_bp.route('/funcoes', methods=['POST'])
-def inserir_funcao():
+@verifica_token
+def inserir_funcao(payload):
     try:
         dados_funcao = request.get_json()
 
@@ -47,7 +49,8 @@ def inserir_funcao():
         return jsonify({'message': 'Erro ao inserir função'}), 500
 
 @funcao_bp.route('/funcoes/<int:id_funcao>', methods=['PUT'])
-def atualizar_funcao(id_funcao):
+@verifica_token
+def atualizar_funcao(payload, id_funcao):
     try:
         dados_funcao = request.get_json()
 
@@ -72,7 +75,8 @@ def atualizar_funcao(id_funcao):
         return jsonify({'message': 'Erro ao atualizar função'}), 500
 
 @funcao_bp.route('/funcoes/<int:id_funcao>', methods=['DELETE'])
-def deletar_funcao(id_funcao):
+@verifica_token
+def deletar_funcao(payload, id_funcao):
     try:
         query = "DELETE FROM db_coffeeshop.funcao WHERE id_funcao = %s"
         params = (id_funcao,)

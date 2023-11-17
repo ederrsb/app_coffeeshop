@@ -1,13 +1,15 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
+from login import verifica_token
 
 funcionario_bp = Blueprint('funcionario', __name__)
 
 conexao = Conexao()
 
 @funcionario_bp.route('/funcionarios', methods=['GET'])
-def obter_funcionarios():
+@verifica_token
+def obter_funcionarios(payload):
     try:
         query = 'SELECT * FROM funcionario'
         resultado = conexao.execute_query(query)
@@ -23,7 +25,8 @@ def obter_funcionarios():
         return jsonify({'message': 'Erro ao obter funcionários'}), 500
     
 @funcionario_bp.route('/funcionarios', methods=['POST'])
-def inserir_funcionario():
+@verifica_token
+def inserir_funcionario(payload):
     try:
         dados_funcionario = request.get_json()
 
@@ -48,7 +51,8 @@ def inserir_funcionario():
         return jsonify({'message': 'Erro ao inserir funcionário'}), 500
 
 @funcionario_bp.route('/funcionarios/<int:id_funcionario>', methods=['PUT'])
-def atualizar_funcionario(id_funcionario):
+@verifica_token
+def atualizar_funcionario(payload, id_funcionario):
     try:
         dados_funcionario = request.get_json()
 
@@ -75,7 +79,8 @@ def atualizar_funcionario(id_funcionario):
         return jsonify({'message': 'Erro ao atualizar funcionário'}), 500
 
 @funcionario_bp.route('/funcionarios/<int:id_funcionario>', methods=['DELETE'])
-def deletar_funcionario(id_funcionario):
+@verifica_token
+def deletar_funcionario(payload, id_funcionario):
     try:
         query = "DELETE FROM db_coffeeshop.funcionario WHERE id_funcionario = %s"
         params = (id_funcionario,)

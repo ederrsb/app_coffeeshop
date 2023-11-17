@@ -1,14 +1,15 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
+from login import verifica_token
 import bcrypt
 
 usuario_bp = Blueprint('usuario', __name__)
-
 conexao = Conexao()
 
 @usuario_bp.route('/usuarios', methods=['GET'])
-def obter_usuarios():
+@verifica_token
+def obter_usuarios(payload):
     try:
         query = 'SELECT * FROM usuario'
         resultado = conexao.execute_query(query)
@@ -33,14 +34,13 @@ def inserir_usuario():
 
         query = """
                 INSERT INTO db_coffeeshop.usuario (id_cliente, id_funcionario, tipo_usuario, data_cadastro, email, senha, status)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, now(), %s, %s, %s)
                 """
 
         params = (
             dados_usuario['id_cliente'],
             dados_usuario['id_funcionario'],
             dados_usuario['tipo_usuario'],
-            dados_usuario['data_cadastro'],
             dados_usuario['email'],
             senha_hashed,
             dados_usuario['status']
@@ -55,7 +55,8 @@ def inserir_usuario():
         return jsonify({'message': 'Erro ao inserir usuário'}), 500
 
 @usuario_bp.route('/usuarios/<int:id_usuario>', methods=['PUT'])
-def atualizar_usuario(id_usuario):
+@verifica_token
+def atualizar_usuario(payload, id_usuario):
     try:
         dados_usuario = request.get_json()
 
@@ -65,7 +66,7 @@ def atualizar_usuario(id_usuario):
         query = """
                     UPDATE db_coffeeshop.usuario
                     SET id_cliente = %s, id_funcionario = %s, tipo_usuario = %s,
-                        data_cadastro = %s, email = %s, senha = %s, status = %s
+                        email = %s, senha = %s, status = %s
                     WHERE id_usuario = %s
                 """
 
@@ -73,7 +74,6 @@ def atualizar_usuario(id_usuario):
             dados_usuario['id_cliente'],
             dados_usuario['id_funcionario'],
             dados_usuario['tipo_usuario'],
-            dados_usuario['data_cadastro'],
             dados_usuario['email'],
             senha_hashed,
             dados_usuario['status'],
@@ -89,7 +89,8 @@ def atualizar_usuario(id_usuario):
         return jsonify({'message': 'Erro ao atualizar usuário'}), 500
 
 @usuario_bp.route('/usuarios/<int:id_usuario>', methods=['DELETE'])
-def deletar_usuario(id_usuario):
+@verifica_token
+def deletar_usuario(payload, id_usuario):
     try:
         query = "DELETE FROM db_coffeeshop.usuario WHERE id_usuario = %s"
         params = (id_usuario,)
@@ -102,16 +103,9 @@ def deletar_usuario(id_usuario):
         logger.error(f"Erro ao deletar usuário: {str(e)}")
         return jsonify({'message': 'Erro ao deletar usuário'}), 500
 
-from flask import Blueprint, jsonify, request
-from conexao_db import Conexao
-import logging
-from logger import logger
-
-usuario_bp = Blueprint('usuario', __name__)
-conexao = Conexao()
-
 @usuario_bp.route('/usuarios2', methods=['GET'])
-def obter_usuarios2():
+@verifica_token
+def obter_usuarios2(payload):
     try:
         tipo_usuario = request.args.get('tipo_usuario', default=None, type=str)
         id_usuario = request.args.get('id_usuario', default=None, type=int)

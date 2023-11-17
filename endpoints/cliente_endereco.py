@@ -1,14 +1,15 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
-import logging
 from logger import logger
+from login import verifica_token
 
 cliente_endereco_bp = Blueprint('cliente_endereco', __name__)
 
 conexao = Conexao()
 
 @cliente_endereco_bp.route('/clientes_endereco/<int:id_cliente>', methods=['GET'])
-def obter_enderecos_cliente(id_cliente):
+@verifica_token
+def obter_enderecos_cliente(payload, id_cliente):
     try:
         query = 'SELECT * FROM cliente_endereco WHERE id_cliente = %s'
         resultado = conexao.execute_query(query, (id_cliente,))
@@ -24,7 +25,8 @@ def obter_enderecos_cliente(id_cliente):
         return jsonify({'message': 'Erro ao obter endereços do cliente'}), 500
 
 @cliente_endereco_bp.route('/clientes_endereco', methods=['POST'])
-def inserir_endereco_cliente():
+@verifica_token
+def inserir_endereco_cliente(payload):
     try:
         dados_endereco = request.get_json()
 
@@ -54,7 +56,8 @@ def inserir_endereco_cliente():
         return jsonify({'message': 'Erro ao inserir endereço do cliente'}), 500
 
 @cliente_endereco_bp.route('/clientes_endereco/<int:id_cliente>/<int:seq>', methods=['PUT'])
-def atualizar_endereco_cliente(id_cliente, seq):
+@verifica_token
+def atualizar_endereco_cliente(payload, id_cliente, seq):
     try:
         dados_endereco = request.get_json()
 
@@ -85,7 +88,8 @@ def atualizar_endereco_cliente(id_cliente, seq):
         return jsonify({'message': 'Erro ao atualizar endereço do cliente'}), 500
 
 @cliente_endereco_bp.route('/clientes_endereco/<int:id_cliente>/<int:seq>', methods=['DELETE'])
-def deletar_endereco_cliente(id_cliente, seq):
+@verifica_token
+def deletar_endereco_cliente(payload, id_cliente, seq):
     try:
         query = "DELETE FROM db_coffeeshop.cliente_endereco WHERE id_cliente = %s AND seq = %s"
         params = (id_cliente, seq)

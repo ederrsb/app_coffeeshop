@@ -1,12 +1,14 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
-from logger import logger  # Certifique-se de importar o logger adequado
+from logger import logger 
+from login import verifica_token
 
 item_conta_estoque_bp = Blueprint('item_conta_estoque', __name__)
 conexao = Conexao()
 
 @item_conta_estoque_bp.route('/itens_conta_estoque', methods=['GET'])
-def obter_itens_conta_estoque():
+@verifica_token
+def obter_itens_conta_estoque(payload):
     try:
         query = 'SELECT * FROM item_conta_estoque'
         resultado = conexao.execute_query(query)
@@ -22,7 +24,8 @@ def obter_itens_conta_estoque():
         return jsonify({'message': 'Erro ao obter itens de conta de estoque'}), 500
 
 @item_conta_estoque_bp.route('/itens_conta_estoque', methods=['POST'])
-def inserir_item_conta_estoque():
+@verifica_token
+def inserir_item_conta_estoque(payload):
     try:
         dados_item_conta_estoque = request.get_json()
 
@@ -48,7 +51,8 @@ def inserir_item_conta_estoque():
         return jsonify({'message': 'Erro ao inserir item de conta de estoque'}), 500
 
 @item_conta_estoque_bp.route('/itens_conta_estoque/<int:id_item>/<int:id_conta_estoque>', methods=['PUT'])
-def atualizar_item_conta_estoque(id_item, id_conta_estoque):
+@verifica_token
+def atualizar_item_conta_estoque(payload, id_item, id_conta_estoque):
     try:
         dados_item_conta_estoque = request.get_json()
 
@@ -75,7 +79,8 @@ def atualizar_item_conta_estoque(id_item, id_conta_estoque):
         return jsonify({'message': 'Erro ao atualizar item de conta de estoque'}), 500
 
 @item_conta_estoque_bp.route('/itens_conta_estoque/<int:id_item>/<int:id_conta_estoque>', methods=['DELETE'])
-def deletar_item_conta_estoque(id_item, id_conta_estoque):
+@verifica_token
+def deletar_item_conta_estoque(payload, id_item, id_conta_estoque):
     try:
         query = "DELETE FROM item_conta_estoque WHERE id_item = %s AND id_conta_estoque = %s"
         params = (id_item, id_conta_estoque)

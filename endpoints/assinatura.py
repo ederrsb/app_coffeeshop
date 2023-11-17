@@ -1,14 +1,15 @@
 from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
-import logging
 from logger import logger
+from login import verifica_token
 
 assinatura_bp = Blueprint('assinatura', __name__)
 
 conexao = Conexao()
 
 @assinatura_bp.route('/assinaturas', methods=['GET'])
-def obter_assinaturas():
+@verifica_token
+def obter_assinaturas(payload):
     try:
         query = 'SELECT * FROM assinatura'
         resultado = conexao.execute_query(query)
@@ -24,7 +25,8 @@ def obter_assinaturas():
         return jsonify({'message': 'Erro ao obter assinaturas'}), 500
 
 @assinatura_bp.route('/assinaturas/<int:id_assinatura>', methods=['GET'])
-def obter_assinatura(id_assinatura):
+@verifica_token
+def obter_assinatura(payload, id_assinatura):
     try:
         query = 'SELECT * FROM assinatura WHERE id_assinatura = %s'
         resultado = conexao.execute_query(query, (id_assinatura,))
@@ -40,7 +42,8 @@ def obter_assinatura(id_assinatura):
         return jsonify({'message': 'Erro ao obter assinatura'}), 500
 
 @assinatura_bp.route('/assinaturas_item', methods=['GET'])
-def obter_assinatura_item():
+@verifica_token
+def obter_assinatura_item(payload):
     try:
         id_cliente = request.args.get('id_cliente')
         id_assinatura = request.args.get('id_assinatura')
@@ -108,7 +111,8 @@ def obter_assinatura_item():
         return jsonify({'message': 'Erro ao obter item das assinaturas'}), 500
     
 @assinatura_bp.route('/assinaturas', methods=['POST'])
-def inserir_assinatura():
+@verifica_token
+def inserir_assinatura(payload):
     try:
         dados_assinatura = request.get_json()
 
@@ -133,7 +137,8 @@ def inserir_assinatura():
         return jsonify({'message': 'Erro ao inserir assinatura'}), 500
 
 @assinatura_bp.route('/assinaturas/<int:id_assinatura>', methods=['PUT'])
-def atualizar_assinatura(id_assinatura):
+@verifica_token
+def atualizar_assinatura(payload, id_assinatura):
     try:
         dados_assinatura = request.get_json()
 
@@ -160,7 +165,8 @@ def atualizar_assinatura(id_assinatura):
         return jsonify({'message': 'Erro ao atualizar assinatura'}), 500
 
 @assinatura_bp.route('/assinaturas/<int:id_assinatura>', methods=['DELETE'])
-def deletar_assinatura(id_assinatura):
+@verifica_token
+def deletar_assinatura(payload, id_assinatura):
     try:
         query = "DELETE FROM db_coffeeshop.assinatura WHERE id_assinatura = %s"
         params = (id_assinatura,)
@@ -174,7 +180,8 @@ def deletar_assinatura(id_assinatura):
         return jsonify({'message': 'Erro ao deletar assinatura'}), 500
 
 @assinatura_bp.route('/assinatura_itens', methods=['POST'])
-def inserir_assinatura_item():
+@verifica_token
+def inserir_assinatura_item(payload):
     try:
         dados_assinatura_item = request.get_json()
 
@@ -198,7 +205,8 @@ def inserir_assinatura_item():
         return jsonify({'message': 'Erro ao inserir item de assinatura'}), 500
 
 @assinatura_bp.route('/assinatura_itens/<int:id_assinatura>/<int:id_item>', methods=['PUT'])
-def atualizar_assinatura_item(id_assinatura, id_item):
+@verifica_token
+def atualizar_assinatura_item(payload, id_assinatura, id_item):
     try:
         dados_assinatura_item = request.get_json()
 
@@ -223,7 +231,8 @@ def atualizar_assinatura_item(id_assinatura, id_item):
         return jsonify({'message': 'Erro ao atualizar item de assinatura'}), 500
 
 @assinatura_bp.route('/assinatura_itens/<int:id_assinatura>/<int:id_item>', methods=['DELETE'])
-def deletar_assinatura_item(id_assinatura, id_item):
+@verifica_token
+def deletar_assinatura_item(payload, id_assinatura, id_item):
     try:
         query = "DELETE FROM db_coffeeshop.assinatura_item WHERE id_assinatura = %s AND id_item = %s"
         params = (id_assinatura, id_item)
