@@ -201,27 +201,32 @@ def verifica_acesso(id_usuario, tipo, acesso):
             tipo = 'excluir'
 
         query = """
-                    SELECT CASE WHEN COUNT(1) = 0 THEN 'N' ELSE 'S' END AS possui_acesso
-                    FROM usuario a
-                    LEFT JOIN funcionario f ON a.id_funcionario = f.id_funcionario
-                    LEFT JOIN funcao f2 ON f2.id_funcao = f.id_funcao
-                    LEFT JOIN prioridade_acesso pa ON pa.id_prioridade = COALESCE(f2.id_prioridade,
-                                                                                    (SELECT p.id_prioridade  
-                                                                                    FROM prioridade p 
-                                                                                    WHERE p.descricao = 'Cliente'))
-                    WHERE a.status = 'A'
-                    AND pa.acesso = %s
-                    AND a.id_usuario = %s
-                    AND CASE WHEN %s = 'consultar' AND pa.consultar = 'S' THEN 'S'
-                            WHEN %s = 'inserir'   AND pa.inserir   = 'S' THEN 'S'
-                            WHEN %s = 'alterar'   AND pa.alterar   = 'S' THEN 'S'
-                            WHEN %s = 'excluir'   AND pa.excluir   = 'S' THEN 'S'
-                        END = 'S';
+                  select case when count(1) = 0 then 'N' else 'S' end as possui_acesso
+                    from usuario a
+                    left join funcionario f on a.id_funcionario = f.id_funcionario
+                    left join funcao f2 on f2.id_funcao = f.id_funcao
+                    left join funcao_acesso fa on fa.id_funcao = coalesce(f2.id_funcao,
+                                                                        (select f3.id_funcao  
+                                                                            from funcao f3 
+                                                                            where f3.descricao = 'Cliente'))
+                  where a.status = 'A'
+                    and fa.id_acesso = %s
+                    and a.id_usuario = %s
+                    and case when %s = 'consultar' and fa.consultar = 'S' then 'S'
+                             when %s = 'inserir'   and fa.inserir   = 'S' then 'S'
+                             when %s = 'alterar'   and fa.alterar   = 'S' then 'S'
+                             when %s = 'excluir'   and fa.excluir   = 'S' then 'S'
+                        end = 'S';
                 """
 
         params = (acesso, id_usuario, tipo, tipo, tipo, tipo)
 
+        logger.info(acesso)
+        logger.info(id_usuario)
+        logger.info(tipo)
+
         resultado = conexao.execute_query(query, params)
+        logger.info(resultado[0][0])
         return resultado[0][0] == 'S'
 
     except Exception as e:

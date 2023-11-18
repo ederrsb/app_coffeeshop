@@ -40,13 +40,13 @@ def inserir_funcao(payload):
         dados_funcao = request.get_json()
 
         query = """
-                INSERT INTO db_coffeeshop.funcao (descricao, prioridade)
+                INSERT INTO db_coffeeshop.funcao (nome, descricao)
                 VALUES (%s, %s)
                 """
 
         params = (
+            dados_funcao['nome'],
             dados_funcao['descricao'],
-            dados_funcao['prioridade'],
         )
 
         conexao.execute_query(query, params)
@@ -69,13 +69,13 @@ def atualizar_funcao(payload, id_funcao):
 
         query = """
                 UPDATE db_coffeeshop.funcao
-                SET descricao = %s, prioridade = %s
+                SET nome = %s, descricao = %s
                 WHERE id_funcao = %s
                 """
 
         params = (
+            dados_funcao['nome'],
             dados_funcao['descricao'],
-            dados_funcao['prioridade'],
             id_funcao
         )
 
