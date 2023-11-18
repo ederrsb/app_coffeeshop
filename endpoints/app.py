@@ -11,6 +11,7 @@ from item import item_bp
 from funcionario import funcionario_bp
 from usuario import usuario_bp
 from funcao_acesso import funcao_acesso_bp
+from carrinho import carrinho_bp
 from login import login_bp
 
 app = Flask(__name__)
@@ -26,6 +27,7 @@ app.register_blueprint(cliente_endereco_bp, cliente_endereco='')
 app.register_blueprint(funcionario_bp, funcionario='')
 app.register_blueprint(usuario_bp, usuario='')
 app.register_blueprint(funcao_acesso_bp, funcao_acesso='')
+app.register_blueprint(carrinho_bp, carrinho='')
 app.register_blueprint(login_bp, login='')
 
 if __name__ == '__main__':
