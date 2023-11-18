@@ -4,13 +4,13 @@ from logger import logger
 from login import verifica_token
 from usuario import verifica_acesso
 
-dados_entrega_bp = Blueprint('dados_entrega', __name__)
+venda_entrega_bp = Blueprint('venda_entrega', __name__)
 
 conexao = Conexao()
 
-@dados_entrega_bp.route('/dados_entrega/<int:id_venda>', methods=['GET'])
+@venda_entrega_bp.route('/vendas_entrega/<int:id_venda>', methods=['GET'])
 @verifica_token
-def obter_dados_entrega(payload, id_venda):
+def obter_vendas_entrega(payload, id_venda):
     id_usuario = payload['id_usuario']
     if not verifica_acesso(id_usuario, request.method, 'venda_entrega'):
         return jsonify({'message': 'Usuário não possui acesso a consultar Dados de Entrega'}), 403
@@ -21,23 +21,23 @@ def obter_dados_entrega(payload, id_venda):
 
         if resultado:
             colunas = [column[0] for column in conexao.cursor.description]
-            dados_entrega = [dict(zip(colunas, dado)) for dado in resultado]
-            return jsonify(dados_entrega)
+            vendas_entrega = [dict(zip(colunas, dado)) for dado in resultado]
+            return jsonify(vendas_entrega)
         else:
             return jsonify([])
     except Exception as e:
         logger.error(f"Erro ao obter dados de entrega: {str(e)}")
         return jsonify({'message': 'Erro ao obter dados de entrega'}), 500
 
-@dados_entrega_bp.route('/dados_entrega', methods=['POST'])
+@venda_entrega_bp.route('/vendas_entrega', methods=['POST'])
 @verifica_token
-def inserir_dados_entrega(payload):
+def inserir_vendas_entrega(payload):
     id_usuario = payload['id_usuario']
     if not verifica_acesso(id_usuario, request.method, 'venda_entrega'):
         return jsonify({'message': 'Usuário não possui acesso a inserir Dados de Entrega'}), 403
     
     try:
-        dados_entrega = request.get_json()
+        vendas_entrega = request.get_json()
 
         query = """
                 INSERT INTO db_coffeeshop.venda_entrega (id_venda, id_cliente, seq, previsao_entrega, observacao, status)
@@ -45,12 +45,12 @@ def inserir_dados_entrega(payload):
                 """
 
         params = (
-            dados_entrega['id_venda'],
-            dados_entrega['id_cliente'],
-            dados_entrega['seq'],
-            dados_entrega['previsao_entrega'],
-            dados_entrega.get('observacao', None),
-            dados_entrega['status'],
+            vendas_entrega['id_venda'],
+            vendas_entrega['id_cliente'],
+            vendas_entrega['seq'],
+            vendas_entrega['previsao_entrega'],
+            vendas_entrega.get('observacao', None),
+            vendas_entrega['status'],
         )
 
         conexao.execute_query(query, params)
@@ -61,15 +61,15 @@ def inserir_dados_entrega(payload):
         logger.error(f"Erro ao inserir dados de entrega: {str(e)}")
         return jsonify({'message': 'Erro ao inserir dados de entrega'}), 500
 
-@dados_entrega_bp.route('/dados_entrega/<int:id_venda>', methods=['PUT'])
+@venda_entrega_bp.route('/vendas_entrega/<int:id_venda>', methods=['PUT'])
 @verifica_token
-def atualizar_dados_entrega(payload, id_venda):
+def atualizar_vendas_entrega(payload, id_venda):
     id_usuario = payload['id_usuario']
     if not verifica_acesso(id_usuario, request.method, 'venda_entrega'):
         return jsonify({'message': 'Usuário não possui acesso a atualizar Dados de Entrega'}), 403
     
     try:
-        dados_entrega = request.get_json()
+        vendas_entrega = request.get_json()
 
         query = """
                 UPDATE db_coffeeshop.venda_entrega
@@ -78,11 +78,11 @@ def atualizar_dados_entrega(payload, id_venda):
                 """
 
         params = (
-            dados_entrega['id_cliente'],
-            dados_entrega['seq'],
-            dados_entrega['previsao_entrega'],
-            dados_entrega.get('observacao', None),
-            dados_entrega['status'],
+            vendas_entrega['id_cliente'],
+            vendas_entrega['seq'],
+            vendas_entrega['previsao_entrega'],
+            vendas_entrega.get('observacao', None),
+            vendas_entrega['status'],
             id_venda,
         )
 
@@ -94,9 +94,9 @@ def atualizar_dados_entrega(payload, id_venda):
         logger.error(f"Erro ao atualizar dados de entrega: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar dados de entrega'}), 500
 
-@dados_entrega_bp.route('/dados_entrega/<int:id_venda>', methods=['DELETE'])
+@venda_entrega_bp.route('/vendas_entrega/<int:id_venda>', methods=['DELETE'])
 @verifica_token
-def deletar_dados_entrega(payload, id_venda):
+def deletar_vendas_entrega(payload, id_venda):
     id_usuario = payload['id_usuario']
     if not verifica_acesso(id_usuario, request.method, 'venda_entrega'):
         return jsonify({'message': 'Usuário não possui acesso a excluir Dados de Entrega'}), 403
