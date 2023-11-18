@@ -94,8 +94,8 @@ def obter_venda_item(payload):
                        f.nome,
                        v.data,
                        v.valor_total_venda,
-                       v.forma_pagamento,
-                       v.status_pagamento,
+                       vp.forma_pagamento,
+                       vp.status as status_pagamento,
                        vi.quantidade,
                        vi.valor_unitario,
                        vi.valor_desconto,
@@ -106,6 +106,7 @@ def obter_venda_item(payload):
                   left join funcionario f on v.id_funcionario = f.id_funcionario
                   left join item i on vi.id_item  = i.id_item
                   left join assinatura a on vi.id_assinatura = a.id_assinatura 
+                  left join venda_pagamento vp on vp.id_venda = v.id_venda
                  where 1=1 {where_clause}
                  order by 1, 2, 3
                 """
@@ -140,17 +141,15 @@ def inserir_venda(payload):
         dados_venda = request.get_json()
 
         query = """
-                    INSERT INTO venda (id_cliente, id_funcionario, data, valor_total_venda, forma_pagamento, status_pagamento)
-                    VALUES (%s, %s, %s, %s, %s, %s)
+                    INSERT INTO venda (id_cliente, id_funcionario, data, valor_total_venda)
+                    VALUES (%s, %s, %s, %s)
                 """
 
         params = (
             dados_venda['id_cliente'],
             dados_venda['id_funcionario'],
             dados_venda['data'],
-            dados_venda['valor_total_venda'],
-            dados_venda['forma_pagamento'],
-            dados_venda['status_pagamento']
+            dados_venda['valor_total_venda']
         )
 
         conexao.execute_query(query, params)
@@ -176,9 +175,7 @@ def atualizar_venda(payload, id_venda):
                     SET id_cliente = %s, 
                         id_funcionario = %s, 
                         data = %s,
-                        valor_total_venda = %s, 
-                        forma_pagamento = %s, 
-                        status_pagamento = %s
+                        valor_total_venda = %s
                     WHERE id_venda = %s
                 """
 
@@ -187,8 +184,6 @@ def atualizar_venda(payload, id_venda):
             dados_venda['id_funcionario'],
             dados_venda['data'],
             dados_venda['valor_total_venda'],
-            dados_venda['forma_pagamento'],
-            dados_venda['status_pagamento'],
             id_venda
         )
 
