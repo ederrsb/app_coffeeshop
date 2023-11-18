@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
+from usuario import verifica_acesso
 
 cliente_bp = Blueprint('cliente', __name__)
 
@@ -10,6 +11,10 @@ conexao = Conexao()
 @cliente_bp.route('/clientes', methods=['GET'])
 @verifica_token
 def obter_clientes(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'cliente'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Cliente'}), 403
+    
     try:
         query = 'SELECT * FROM cliente'
         resultado = conexao.execute_query(query)
@@ -27,6 +32,10 @@ def obter_clientes(payload):
 @cliente_bp.route('/clientes', methods=['POST'])
 @verifica_token
 def inserir_cliente(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'cliente'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Cliente'}), 403
+    
     try:
         dados_cliente = request.get_json()
 
@@ -55,6 +64,10 @@ def inserir_cliente(payload):
 @cliente_bp.route('/clientes/<int:id_cliente>', methods=['PUT'])
 @verifica_token
 def atualizar_cliente(payload, id_cliente):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'cliente'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Cliente'}), 403
+    
     try:
         dados_cliente = request.get_json()
 
@@ -85,6 +98,10 @@ def atualizar_cliente(payload, id_cliente):
 @cliente_bp.route('/clientes/<int:id_cliente>', methods=['DELETE'])
 @verifica_token
 def deletar_cliente(payload, id_cliente):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'cliente'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Cliente'}), 403
+    
     try:
         query = "DELETE FROM db_coffeeshop.cliente WHERE id_cliente = %s"
         params = (id_cliente,)

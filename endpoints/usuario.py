@@ -10,6 +10,10 @@ conexao = Conexao()
 @usuario_bp.route('/usuarios', methods=['GET'])
 @verifica_token
 def obter_usuarios(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'usuario'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Usuário'}), 403
+    
     try:
         query = 'SELECT * FROM usuario'
         resultado = conexao.execute_query(query)
@@ -25,7 +29,11 @@ def obter_usuarios(payload):
         return jsonify({'message': 'Erro ao obter usuários'}), 500
     
 @usuario_bp.route('/usuarios', methods=['POST'])
-def inserir_usuario():
+def inserir_usuario(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'usuario'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Usuário'}), 403
+    
     try:
         dados_usuario = request.get_json()
 
@@ -57,6 +65,10 @@ def inserir_usuario():
 @usuario_bp.route('/usuarios/<int:id_usuario>', methods=['PUT'])
 @verifica_token
 def atualizar_usuario(payload, id_usuario):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'usuario'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Usuário'}), 403
+    
     try:
         dados_usuario = request.get_json()
 
@@ -91,6 +103,10 @@ def atualizar_usuario(payload, id_usuario):
 @usuario_bp.route('/usuarios/<int:id_usuario>', methods=['DELETE'])
 @verifica_token
 def deletar_usuario(payload, id_usuario):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'usuario'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Usuário'}), 403
+    
     try:
         query = "DELETE FROM db_coffeeshop.usuario WHERE id_usuario = %s"
         params = (id_usuario,)
@@ -106,6 +122,10 @@ def deletar_usuario(payload, id_usuario):
 @usuario_bp.route('/usuarios2', methods=['GET'])
 @verifica_token
 def obter_usuarios2(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'usuario'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Usuário'}), 403
+    
     try:
         tipo_usuario = request.args.get('tipo_usuario', default=None, type=str)
         id_usuario = request.args.get('id_usuario', default=None, type=int)
@@ -168,3 +188,42 @@ def obter_usuarios2(payload):
     except Exception as e:
         logger.error(f"Erro ao obter usuários: {str(e)}")
         return jsonify({'message': 'Erro ao obter usuários'}), 500
+
+def verifica_acesso(id_usuario, tipo, acesso):
+    try:
+        if tipo == 'GET':
+            tipo = 'consultar'
+        elif tipo == 'POST':
+            tipo = 'inserir'
+        elif tipo == 'PUT':
+            tipo = 'alterar'
+        elif tipo == 'DELETE':
+            tipo = 'excluir'
+
+        query = """
+                    SELECT CASE WHEN COUNT(1) = 0 THEN 'N' ELSE 'S' END AS possui_acesso
+                    FROM usuario a
+                    LEFT JOIN funcionario f ON a.id_funcionario = f.id_funcionario
+                    LEFT JOIN funcao f2 ON f2.id_funcao = f.id_funcao
+                    LEFT JOIN prioridade_acesso pa ON pa.id_prioridade = COALESCE(f2.id_prioridade,
+                                                                                    (SELECT p.id_prioridade  
+                                                                                    FROM prioridade p 
+                                                                                    WHERE p.descricao = 'Cliente'))
+                    WHERE a.status = 'A'
+                    AND pa.acesso = %s
+                    AND a.id_usuario = %s
+                    AND CASE WHEN %s = 'consultar' AND pa.consultar = 'S' THEN 'S'
+                            WHEN %s = 'inserir'   AND pa.inserir   = 'S' THEN 'S'
+                            WHEN %s = 'alterar'   AND pa.alterar   = 'S' THEN 'S'
+                            WHEN %s = 'excluir'   AND pa.excluir   = 'S' THEN 'S'
+                        END = 'S';
+                """
+
+        params = (acesso, id_usuario, tipo, tipo, tipo, tipo)
+
+        resultado = conexao.execute_query(query, params)
+        return resultado[0][0] == 'S'
+
+    except Exception as e:
+        logger.error(f"Erro ao verificar acesso: {str(e)}")
+        return False

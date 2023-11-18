@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
+from usuario import verifica_acesso
 
 item_categoria_bp = Blueprint('item_categoria', __name__)
 
@@ -10,6 +11,10 @@ conexao = Conexao()
 @item_categoria_bp.route('/itens_categoria', methods=['GET'])
 @verifica_token
 def obter_itens_categoria(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'item_categoria'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Categoria de Item'}), 403
+    
     try:
         query = 'SELECT * FROM item_categoria'
         resultado = conexao.execute_query(query)
@@ -27,6 +32,10 @@ def obter_itens_categoria(payload):
 @item_categoria_bp.route('/itens_categoria', methods=['POST'])
 @verifica_token
 def inserir_item_categoria(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'item_categoria'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Categoria de Item'}), 403
+    
     try:
         dados_item_categoria = request.get_json()
 
@@ -50,6 +59,10 @@ def inserir_item_categoria(payload):
 @item_categoria_bp.route('/itens_categoria/<int:id_item_categoria>', methods=['PUT'])
 @verifica_token
 def atualizar_item_categoria(payload, id_item_categoria):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'item_categoria'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Categoria de Item'}), 403
+    
     try:
         dados_item_categoria = request.get_json()
 
@@ -75,6 +88,10 @@ def atualizar_item_categoria(payload, id_item_categoria):
 @item_categoria_bp.route('/itens_categoria/<int:id_item_categoria>', methods=['DELETE'])
 @verifica_token
 def deletar_item_categoria(payload, id_item_categoria):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'item_categoria'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Categoria de Item'}), 403
+    
     try:
         query = "DELETE FROM db_coffeeshop.item_categoria WHERE id_item_categoria = %s"
         params = (id_item_categoria,)

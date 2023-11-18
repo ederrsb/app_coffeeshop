@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
+from usuario import verifica_acesso
 
 conta_estoque_bp = Blueprint('conta_estoque', __name__)
 conexao = Conexao()
@@ -9,6 +10,10 @@ conexao = Conexao()
 @conta_estoque_bp.route('/contas_estoque', methods=['GET'])
 @verifica_token
 def obter_contas_estoque(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'conta_estoque'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Contas de Estoque'}), 403
+    
     try:
         query = 'SELECT * FROM conta_estoque'
         resultado = conexao.execute_query(query)
@@ -26,6 +31,10 @@ def obter_contas_estoque(payload):
 @conta_estoque_bp.route('/contas_estoque', methods=['POST'])
 @verifica_token
 def inserir_conta_estoque(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'conta_estoque'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Contas de Estoque'}), 403
+    
     try:
         dados_conta_estoque = request.get_json()
 
@@ -49,6 +58,10 @@ def inserir_conta_estoque(payload):
 @conta_estoque_bp.route('/contas_estoque/<int:id_conta_estoque>', methods=['PUT'])
 @verifica_token
 def atualizar_conta_estoque(payload, id_conta_estoque):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'conta_estoque'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Contas de Estoque'}), 403
+    
     try:
         dados_conta_estoque = request.get_json()
 
@@ -74,6 +87,10 @@ def atualizar_conta_estoque(payload, id_conta_estoque):
 @conta_estoque_bp.route('/contas_estoque/<int:id_conta_estoque>', methods=['DELETE'])
 @verifica_token
 def deletar_conta_estoque(payload, id_conta_estoque):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'conta_estoque'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Contas de Estoque'}), 403
+    
     try:
         query = "DELETE FROM conta_estoque WHERE id_conta_estoque = %s"
         params = (id_conta_estoque,)

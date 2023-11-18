@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
+from usuario import verifica_acesso
 
 assinatura_bp = Blueprint('assinatura', __name__)
 
@@ -10,6 +11,10 @@ conexao = Conexao()
 @assinatura_bp.route('/assinaturas', methods=['GET'])
 @verifica_token
 def obter_assinaturas(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'assinatura'):
+        return jsonify({'message': 'Usuário não possui acesso a consulta de Assinatura'}), 403
+    
     try:
         query = 'SELECT * FROM assinatura'
         resultado = conexao.execute_query(query)
@@ -27,6 +32,9 @@ def obter_assinaturas(payload):
 @assinatura_bp.route('/assinaturas/<int:id_assinatura>', methods=['GET'])
 @verifica_token
 def obter_assinatura(payload, id_assinatura):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'assinatura'):
+        return jsonify({'message': 'Usuário não possui acesso a consulta de Assinatura'}), 403
     try:
         query = 'SELECT * FROM assinatura WHERE id_assinatura = %s'
         resultado = conexao.execute_query(query, (id_assinatura,))
@@ -44,6 +52,10 @@ def obter_assinatura(payload, id_assinatura):
 @assinatura_bp.route('/assinaturas_item', methods=['GET'])
 @verifica_token
 def obter_assinatura_item(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'assinatura_item'):
+        return jsonify({'message': 'Usuário não possui acesso a consulta de Item de Assinatura'}), 403
+    
     try:
         id_cliente = request.args.get('id_cliente')
         id_assinatura = request.args.get('id_assinatura')
@@ -113,6 +125,10 @@ def obter_assinatura_item(payload):
 @assinatura_bp.route('/assinaturas', methods=['POST'])
 @verifica_token
 def inserir_assinatura(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'assinatura'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Assinatura'}), 403
+    
     try:
         dados_assinatura = request.get_json()
 
@@ -139,6 +155,10 @@ def inserir_assinatura(payload):
 @assinatura_bp.route('/assinaturas/<int:id_assinatura>', methods=['PUT'])
 @verifica_token
 def atualizar_assinatura(payload, id_assinatura):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'assinatura'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Assinatura'}), 403
+    
     try:
         dados_assinatura = request.get_json()
 
@@ -167,6 +187,10 @@ def atualizar_assinatura(payload, id_assinatura):
 @assinatura_bp.route('/assinaturas/<int:id_assinatura>', methods=['DELETE'])
 @verifica_token
 def deletar_assinatura(payload, id_assinatura):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'assinatura'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Assinatura'}), 403
+    
     try:
         query = "DELETE FROM db_coffeeshop.assinatura WHERE id_assinatura = %s"
         params = (id_assinatura,)
@@ -182,6 +206,10 @@ def deletar_assinatura(payload, id_assinatura):
 @assinatura_bp.route('/assinatura_itens', methods=['POST'])
 @verifica_token
 def inserir_assinatura_item(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'assinatura_item'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Item de Assinatura'}), 403
+    
     try:
         dados_assinatura_item = request.get_json()
 
@@ -207,6 +235,10 @@ def inserir_assinatura_item(payload):
 @assinatura_bp.route('/assinatura_itens/<int:id_assinatura>/<int:id_item>', methods=['PUT'])
 @verifica_token
 def atualizar_assinatura_item(payload, id_assinatura, id_item):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'assinatura_item'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Item de Assinatura'}), 403
+    
     try:
         dados_assinatura_item = request.get_json()
 
@@ -233,6 +265,10 @@ def atualizar_assinatura_item(payload, id_assinatura, id_item):
 @assinatura_bp.route('/assinatura_itens/<int:id_assinatura>/<int:id_item>', methods=['DELETE'])
 @verifica_token
 def deletar_assinatura_item(payload, id_assinatura, id_item):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'assinatura_item'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Item de Assinatura'}), 403
+    
     try:
         query = "DELETE FROM db_coffeeshop.assinatura_item WHERE id_assinatura = %s AND id_item = %s"
         params = (id_assinatura, id_item)

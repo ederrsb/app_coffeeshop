@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
+from usuario import verifica_acesso
 
 cliente_endereco_bp = Blueprint('cliente_endereco', __name__)
 
@@ -10,6 +11,10 @@ conexao = Conexao()
 @cliente_endereco_bp.route('/clientes_endereco/<int:id_cliente>', methods=['GET'])
 @verifica_token
 def obter_enderecos_cliente(payload, id_cliente):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'cliente_endereco'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Endereço de Cliente'}), 403
+    
     try:
         query = 'SELECT * FROM cliente_endereco WHERE id_cliente = %s'
         resultado = conexao.execute_query(query, (id_cliente,))
@@ -27,6 +32,10 @@ def obter_enderecos_cliente(payload, id_cliente):
 @cliente_endereco_bp.route('/clientes_endereco', methods=['POST'])
 @verifica_token
 def inserir_endereco_cliente(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'cliente_endereco'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Endereço de Cliente'}), 403
+    
     try:
         dados_endereco = request.get_json()
 
@@ -58,6 +67,10 @@ def inserir_endereco_cliente(payload):
 @cliente_endereco_bp.route('/clientes_endereco/<int:id_cliente>/<int:seq>', methods=['PUT'])
 @verifica_token
 def atualizar_endereco_cliente(payload, id_cliente, seq):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'cliente_endereco'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Endereço de Cliente'}), 403
+    
     try:
         dados_endereco = request.get_json()
 
@@ -90,6 +103,10 @@ def atualizar_endereco_cliente(payload, id_cliente, seq):
 @cliente_endereco_bp.route('/clientes_endereco/<int:id_cliente>/<int:seq>', methods=['DELETE'])
 @verifica_token
 def deletar_endereco_cliente(payload, id_cliente, seq):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'cliente_endereco'):
+        return jsonify({'message': 'Usuário não possui acesso a deletar Endereço de Cliente'}), 403
+    
     try:
         query = "DELETE FROM db_coffeeshop.cliente_endereco WHERE id_cliente = %s AND seq = %s"
         params = (id_cliente, seq)

@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
+from usuario import verifica_acesso
 
 funcao_bp = Blueprint('funcao', __name__)
 
@@ -10,6 +11,10 @@ conexao = Conexao()
 @funcao_bp.route('/funcoes', methods=['GET'])
 @verifica_token
 def obter_funcoes(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'funcao'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Função'}), 403
+    
     try:
         query = 'SELECT * FROM funcao'
         resultado = conexao.execute_query(query)
@@ -27,6 +32,10 @@ def obter_funcoes(payload):
 @funcao_bp.route('/funcoes', methods=['POST'])
 @verifica_token
 def inserir_funcao(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'funcao'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Função'}), 403
+    
     try:
         dados_funcao = request.get_json()
 
@@ -51,6 +60,10 @@ def inserir_funcao(payload):
 @funcao_bp.route('/funcoes/<int:id_funcao>', methods=['PUT'])
 @verifica_token
 def atualizar_funcao(payload, id_funcao):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'funcao'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Função'}), 403
+    
     try:
         dados_funcao = request.get_json()
 
@@ -77,6 +90,10 @@ def atualizar_funcao(payload, id_funcao):
 @funcao_bp.route('/funcoes/<int:id_funcao>', methods=['DELETE'])
 @verifica_token
 def deletar_funcao(payload, id_funcao):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'funcao'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Função'}), 403
+    
     try:
         query = "DELETE FROM db_coffeeshop.funcao WHERE id_funcao = %s"
         params = (id_funcao,)

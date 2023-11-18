@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
+from usuario import verifica_acesso
 
 item_bp = Blueprint('item', __name__)
 conexao = Conexao()
@@ -9,6 +10,10 @@ conexao = Conexao()
 @item_bp.route('/itens', methods=['GET'])
 @verifica_token
 def obter_itens(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'item'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Item'}), 403
+    
     try:
         query = 'SELECT * FROM Item'
         resultado = conexao.execute_query(query)
@@ -26,6 +31,10 @@ def obter_itens(payload):
 @item_bp.route('/itens', methods=['POST'])
 @verifica_token
 def inserir_item(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'item'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Item'}), 403
+    
     try:
         dados_item = request.get_json()
 
@@ -52,6 +61,10 @@ def inserir_item(payload):
 @item_bp.route('/itens/<int:id_item>', methods=['PUT'])
 @verifica_token
 def atualizar_item(payload, id_item):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'item'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Item'}), 403
+    
     try:
         dados_item = request.get_json()
 
@@ -81,6 +94,10 @@ def atualizar_item(payload, id_item):
 @item_bp.route('/itens/<int:id_item>', methods=['DELETE'])
 @verifica_token
 def deletar_item(payload, id_item):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'item'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Item'}), 403
+    
     try:
         query = "DELETE FROM db_coffeeshop.Item WHERE id_item = %s"
         params = (id_item,)
@@ -96,6 +113,10 @@ def deletar_item(payload, id_item):
 @item_bp.route('/itens2', methods=['GET'])
 @verifica_token
 def obter_itens2(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'item'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Item'}), 403
+    
     id_item = request.args.get('id_item')
     desc_item = request.args.get('desc_item')
     id_item_categoria = request.args.get('id_item_categoria')

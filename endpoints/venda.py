@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
+from usuario import verifica_acesso
 
 venda_bp = Blueprint('venda', __name__)
 conexao = Conexao()
@@ -9,10 +10,14 @@ conexao = Conexao()
 @venda_bp.route('/vendas', methods=['GET'])
 @verifica_token
 def obter_vendas(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'venda'):
+        return jsonify({'message': 'Usuário não possui acesso a consulta de Venda'}), 403
+    
     try:
         query = 'SELECT * FROM venda'
         resultado = conexao.execute_query(query)
-
+        
         if resultado:
             colunas = [column[0] for column in conexao.cursor.description]
             vendas = [dict(zip(colunas, venda)) for venda in resultado]
@@ -26,6 +31,10 @@ def obter_vendas(payload):
 @venda_bp.route('/vendas/<int:id_venda>', methods=['GET'])
 @verifica_token
 def obter_venda(payload, id_venda):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'venda'):
+        return jsonify({'message': 'Usuário não possui acesso a consulta de Venda'}), 403
+    
     try:
         query = 'SELECT * FROM venda WHERE id_venda = %s'
         resultado = conexao.execute_query(query, (id_venda,))
@@ -43,6 +52,10 @@ def obter_venda(payload, id_venda):
 @venda_bp.route('/vendas_itens', methods=['GET'])
 @verifica_token
 def obter_venda_item(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'venda_item'):
+        return jsonify({'message': 'Usuário não possui acesso a consulta de Item de Venda'}), 403
+    
     try:
         tipo = request.args.get('tipo')
         id_venda = request.args.get('id_venda')
@@ -119,6 +132,10 @@ def obter_venda_item(payload):
 @venda_bp.route('/vendas', methods=['POST'])
 @verifica_token
 def inserir_venda(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'venda'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Venda'}), 403
+    
     try:
         dados_venda = request.get_json()
 
@@ -147,6 +164,10 @@ def inserir_venda(payload):
 @venda_bp.route('/vendas/<int:id_venda>', methods=['PUT'])
 @verifica_token
 def atualizar_venda(payload, id_venda):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'venda'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Venda'}), 403
+    
     try:
         dados_venda = request.get_json()
 
@@ -182,6 +203,10 @@ def atualizar_venda(payload, id_venda):
 @venda_bp.route('/vendas/<int:id_venda>', methods=['DELETE'])
 @verifica_token
 def deletar_venda(payload, id_venda):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'venda'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Venda'}), 403
+    
     try:
         query = "DELETE FROM venda WHERE id_venda = %s"
         params = (id_venda,)
@@ -197,6 +222,10 @@ def deletar_venda(payload, id_venda):
 @venda_bp.route('/vendas_itens', methods=['POST'])
 @verifica_token
 def inserir_venda_item(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'venda_item'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Item de Venda'}), 403
+    
     try:
         dados_venda_item = request.get_json()
 
@@ -227,6 +256,10 @@ def inserir_venda_item(payload):
 @venda_bp.route('/vendas_itens/<int:id_venda>/<int:item>', methods=['PUT'])
 @verifica_token
 def atualizar_venda_item(payload, id_venda, item):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'venda_item'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Item de Venda'}), 403
+    
     try:
         dados_venda_item = request.get_json()
 
@@ -263,6 +296,10 @@ def atualizar_venda_item(payload, id_venda, item):
 @venda_bp.route('/vendas_itens/<int:id_venda>/<int:item>', methods=['DELETE'])
 @verifica_token
 def deletar_venda_item(payload, id_venda, item):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'venda_item'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Item de Venda'}), 403
+    
     try:
         query = "DELETE FROM venda_item WHERE id_venda = %s AND item = %s"
         params = (id_venda, item)

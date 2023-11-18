@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
+from usuario import verifica_acesso
 
 funcionario_bp = Blueprint('funcionario', __name__)
 
@@ -10,6 +11,10 @@ conexao = Conexao()
 @funcionario_bp.route('/funcionarios', methods=['GET'])
 @verifica_token
 def obter_funcionarios(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'funcionario'):
+        return jsonify({'message': 'Usuário não possui acesso a consultar Funcionário'}), 403
+    
     try:
         query = 'SELECT * FROM funcionario'
         resultado = conexao.execute_query(query)
@@ -27,6 +32,10 @@ def obter_funcionarios(payload):
 @funcionario_bp.route('/funcionarios', methods=['POST'])
 @verifica_token
 def inserir_funcionario(payload):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'funcionario'):
+        return jsonify({'message': 'Usuário não possui acesso a inserir Funcionário'}), 403
+    
     try:
         dados_funcionario = request.get_json()
 
@@ -53,6 +62,10 @@ def inserir_funcionario(payload):
 @funcionario_bp.route('/funcionarios/<int:id_funcionario>', methods=['PUT'])
 @verifica_token
 def atualizar_funcionario(payload, id_funcionario):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'funcionario'):
+        return jsonify({'message': 'Usuário não possui acesso a alterar Funcionário'}), 403
+    
     try:
         dados_funcionario = request.get_json()
 
@@ -81,6 +94,10 @@ def atualizar_funcionario(payload, id_funcionario):
 @funcionario_bp.route('/funcionarios/<int:id_funcionario>', methods=['DELETE'])
 @verifica_token
 def deletar_funcionario(payload, id_funcionario):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'funcionario'):
+        return jsonify({'message': 'Usuário não possui acesso a excluir Funcionário'}), 403
+    
     try:
         query = "DELETE FROM db_coffeeshop.funcionario WHERE id_funcionario = %s"
         params = (id_funcionario,)
