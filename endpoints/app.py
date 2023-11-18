@@ -1,6 +1,7 @@
 from flask import Flask
 from venda import venda_bp
 from venda_pagamento import venda_pagamento_bp
+from dados_entrega import dados_entrega_bp
 from conta_estoque import conta_estoque_bp
 from assinatura import assinatura_bp
 from item_conta_estoque import item_conta_estoque_bp
@@ -18,6 +19,7 @@ from login import login_bp
 app = Flask(__name__)
 app.register_blueprint(venda_bp, url_prefix='')
 app.register_blueprint(venda_pagamento_bp, venda_pagamento='')
+app.register_blueprint(dados_entrega_bp, dados_entrega='')
 app.register_blueprint(assinatura_bp, url_prefix='')
 app.register_blueprint(item_bp, url_prefix='')
 app.register_blueprint(conta_estoque_bp, conta_estoque='')
