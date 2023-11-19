@@ -3,6 +3,7 @@ from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
 from usuario import verifica_acesso
+from datetime import datetime
 
 carrinho_bp = Blueprint('carrinho', __name__)
 
@@ -118,3 +119,66 @@ def deletar_carrinho(payload, id_cliente, id_item):
     except Exception as e:
         logger.error(f"Erro ao deletar carrinho: {str(e)}")
         return jsonify({'message': 'Erro ao deletar carrinho'}), 500
+
+@carrinho_bp.route('/finaliza_carrinho/<int:id_cliente>', methods=['POST'])
+@verifica_token
+def finaliza_carrinho(payload, id_cliente):
+    id_usuario = payload['id_usuario']
+    if not verifica_acesso(id_usuario, request.method, 'finaliza_carrinho'):
+        return jsonify({'message': 'Usuário não possui acesso a finalizar carrinho'}), 403
+    
+    try:
+        # Verificar se o carrinho está vazio
+        query_carrinho_vazio = 'SELECT COUNT(*) FROM carrinho WHERE id_cliente = %s'
+        resultado_carrinho_vazio = conexao.execute_query(query_carrinho_vazio, (id_cliente,))
+        if resultado_carrinho_vazio and resultado_carrinho_vazio[0][0] == 0:
+            return jsonify({'message': 'Carrinho está vazio'}), 400
+
+        # Inserir venda
+        data_atual = datetime.now().date()
+        query_inserir_venda = """
+            INSERT INTO db_coffeeshop.venda (id_cliente, data, valor_total_venda)
+            SELECT %s, %s, SUM(ci.quantidade * (ci.valor_unitario - ci.valor_desconto))
+            FROM carrinho ci
+            WHERE ci.id_cliente = %s
+        """
+        params_inserir_venda = (id_cliente, data_atual, id_cliente)
+        conexao.execute_query(query_inserir_venda, params_inserir_venda)
+        conexao.connection.commit()
+
+        # Obter o ID da venda recém-criada
+        query_obter_id_venda = 'SELECT LAST_INSERT_ID()'
+        id_venda = conexao.execute_query(query_obter_id_venda)[0][0]
+
+        # Inserir venda_item
+        query_inserir_venda_item = """
+            INSERT INTO db_coffeeshop.venda_item (id_venda, item, id_item, quantidade, valor_unitario, valor_desconto, valor_total_item)
+            SELECT %s, ci.id_item, ci.id_item, ci.quantidade, ci.valor_unitario, ci.valor_desconto, ci.valor_total_item
+            FROM carrinho ci
+            JOIN Item it ON ci.id_item = it.id_item
+            WHERE ci.id_cliente = %s
+        """
+        params_inserir_venda_item = (id_venda, id_cliente)
+        conexao.execute_query(query_inserir_venda_item, params_inserir_venda_item)
+        conexao.connection.commit()
+
+        # Atualizar saldo na tabela item_conta_estoque
+        query_atualizar_saldo = """
+            UPDATE item_conta_estoque ics
+            JOIN carrinho ci ON ics.id_item = ci.id_item
+            SET ics.saldo = ics.saldo - ci.quantidade, ics.data_atualizacao = now()
+            WHERE ics.conta_padrao = 'S' AND ci.id_cliente = %s
+        """
+        params_atualizar_saldo = (id_cliente,)
+        conexao.execute_query(query_atualizar_saldo, params_atualizar_saldo)
+        conexao.connection.commit()
+
+        # Limpar carrinho
+        query_limpar_carrinho = 'DELETE FROM carrinho WHERE id_cliente = %s'
+        conexao.execute_query(query_limpar_carrinho, (id_cliente,))
+        conexao.connection.commit()
+
+        return jsonify({'message': 'Carrinho finalizado com sucesso'}), 200
+    except Exception as e:
+        logger.error(f"Erro ao finalizar carrinho: {str(e)}")
+        return jsonify({'message': 'Erro ao finalizar carrinho'}), 500
