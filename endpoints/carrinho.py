@@ -134,6 +134,23 @@ def finaliza_carrinho(payload, id_cliente):
         if resultado_carrinho_vazio and resultado_carrinho_vazio[0][0] == 0:
             return jsonify({'message': 'Carrinho está vazio'}), 400
 
+        # Verificar se há saldo disponível para cada item no carrinho
+        query_saldo_disponivel = """
+            SELECT c.id_item, i.descricao
+            FROM carrinho c
+            JOIN item_conta_estoque ics ON c.id_item = ics.id_item
+            JOIN item i ON c.id_item = i.id_item
+            WHERE c.id_cliente = %s AND ics.conta_padrao = 'S' AND ics.saldo < c.quantidade
+        """
+        params_saldo_disponivel = (id_cliente,)
+        resultado_saldo_disponivel = conexao.execute_query(query_saldo_disponivel, params_saldo_disponivel)
+
+        if resultado_saldo_disponivel:
+            mensagem = 'Saldo insuficiente para os seguintes itens:\n'
+            for item in resultado_saldo_disponivel:
+                mensagem += f'ID do Item: {item[0]}, Descrição: {item[1]}\n'
+            return jsonify({'message': mensagem}), 400
+
         # Inserir venda
         data_atual = datetime.now().date()
         query_inserir_venda = """
