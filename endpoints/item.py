@@ -3,6 +3,7 @@ from conexao_db import Conexao
 from logger import logger
 from login import verifica_token
 from usuario import verifica_acesso
+import base64
 
 item_bp = Blueprint('item', __name__)
 conexao = Conexao()
@@ -111,11 +112,7 @@ def deletar_item(payload, id_item):
         return jsonify({'message': 'Erro ao deletar item'}), 500
 
 @item_bp.route('/itens2', methods=['GET'])
-@verifica_token
-def obter_itens2(payload):
-    id_usuario = payload['id_usuario']
-    if not verifica_acesso(id_usuario, request.method, 'item'):
-        return jsonify({'message': 'Usuário não possui acesso a consultar Item'}), 403
+def obter_itens2():
     
     id_item = request.args.get('id_item')
     desc_item = request.args.get('desc_item')
@@ -162,7 +159,8 @@ def obter_itens2(payload):
                        i.status,
                        coalesce((select sum(coalesce(ice.saldo, 0))
                                    from item_conta_estoque ice
-                                   where ice.id_item = i.id_item), 0) as saldo
+                                   where ice.id_item = i.id_item), 0) as saldo,
+                        i.imagem
                    from item i 
                    join item_categoria ic on i.id_item_categoria = ic.id_item_categoria) a  
          where 1=1 {where_clause}
@@ -186,7 +184,13 @@ def obter_itens2(payload):
 
     if resultado:
         colunas = [column[0] for column in conexao.cursor.description]
-        itens = [dict(zip(colunas, item)) for item in resultado]
+        # Converter bytes para base64 antes de criar o dicionário
+        itens = []
+        for item in resultado:
+            item_dict = dict(zip(colunas, item))
+            if 'imagem' in item_dict and item_dict['imagem'] is not None:
+                item_dict['imagem'] = base64.b64encode(item_dict['imagem']).decode('utf-8')
+            itens.append(item_dict)
         return jsonify(itens)
     else:
         return jsonify({'message': 'Item encontrada'}), 404

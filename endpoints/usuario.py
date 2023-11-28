@@ -11,11 +11,16 @@ conexao = Conexao()
 @verifica_token
 def obter_usuarios(payload):
     id_usuario = payload['id_usuario']
-    if not verifica_acesso(id_usuario, request.method, 'usuario'):
-        return jsonify({'message': 'Usuário não possui acesso a consultar Usuário'}), 403
+    # Se não tem acesso poderá consultar apenas o próprio
+    if verifica_acesso(id_usuario, request.method, 'cliente'):
+       id_usuario = '' 
     
     try:
-        query = 'SELECT * FROM usuario'
+        if id_usuario:
+            query = f"SELECT * FROM usuario WHERE id_usuario = '{id_usuario}'"
+        else:
+            query = "SELECT * FROM usuario"
+
         resultado = conexao.execute_query(query)
 
         if resultado:
@@ -29,11 +34,7 @@ def obter_usuarios(payload):
         return jsonify({'message': 'Erro ao obter usuários'}), 500
     
 @usuario_bp.route('/usuarios', methods=['POST'])
-def inserir_usuario(payload):
-    id_usuario = payload['id_usuario']
-    if not verifica_acesso(id_usuario, request.method, 'usuario'):
-        return jsonify({'message': 'Usuário não possui acesso a inserir Usuário'}), 403
-    
+def inserir_usuario():
     try:
         dados_usuario = request.get_json()
 
@@ -41,17 +42,13 @@ def inserir_usuario(payload):
         senha_hashed = bcrypt.hashpw(dados_usuario['senha'].encode('utf-8'), bcrypt.gensalt())
 
         query = """
-                INSERT INTO db_coffeeshop.usuario (id_cliente, id_funcionario, tipo_usuario, data_cadastro, email, senha, status)
-                VALUES (%s, %s, %s, now(), %s, %s, %s)
+                INSERT INTO db_coffeeshop.usuario (data_cadastro, email, senha, status)
+                VALUES (now(), %s, %s, 'A')
                 """
 
         params = (
-            dados_usuario['id_cliente'],
-            dados_usuario['id_funcionario'],
-            dados_usuario['tipo_usuario'],
             dados_usuario['email'],
-            senha_hashed,
-            dados_usuario['status']
+            senha_hashed
         )
 
         conexao.execute_query(query, params)
@@ -65,8 +62,8 @@ def inserir_usuario(payload):
 @usuario_bp.route('/usuarios/<int:id_usuario>', methods=['PUT'])
 @verifica_token
 def atualizar_usuario(payload, id_usuario):
-    id_usuario = payload['id_usuario']
-    if not verifica_acesso(id_usuario, request.method, 'usuario'):
+    id_usuario_logado = payload['id_usuario']
+    if not verifica_acesso(id_usuario_logado, request.method, 'usuario'):
         return jsonify({'message': 'Usuário não possui acesso a alterar Usuário'}), 403
     
     try:
@@ -77,15 +74,11 @@ def atualizar_usuario(payload, id_usuario):
 
         query = """
                     UPDATE db_coffeeshop.usuario
-                    SET id_cliente = %s, id_funcionario = %s, tipo_usuario = %s,
-                        email = %s, senha = %s, status = %s
+                    SET email = %s, senha = %s, status = %s
                     WHERE id_usuario = %s
                 """
 
         params = (
-            dados_usuario['id_cliente'],
-            dados_usuario['id_funcionario'],
-            dados_usuario['tipo_usuario'],
             dados_usuario['email'],
             senha_hashed,
             dados_usuario['status'],
@@ -103,8 +96,8 @@ def atualizar_usuario(payload, id_usuario):
 @usuario_bp.route('/usuarios/<int:id_usuario>', methods=['DELETE'])
 @verifica_token
 def deletar_usuario(payload, id_usuario):
-    id_usuario = payload['id_usuario']
-    if not verifica_acesso(id_usuario, request.method, 'usuario'):
+    id_usuario_logado = payload['id_usuario']
+    if not verifica_acesso(id_usuario_logado, request.method, 'usuario'):
         return jsonify({'message': 'Usuário não possui acesso a excluir Usuário'}), 403
     
     try:
@@ -118,77 +111,8 @@ def deletar_usuario(payload, id_usuario):
     except Exception as e:
         logger.error(f"Erro ao deletar usuário: {str(e)}")
         return jsonify({'message': 'Erro ao deletar usuário'}), 500
-
-@usuario_bp.route('/usuarios2', methods=['GET'])
-@verifica_token
-def obter_usuarios2(payload):
-    id_usuario = payload['id_usuario']
-    if not verifica_acesso(id_usuario, request.method, 'usuario'):
-        return jsonify({'message': 'Usuário não possui acesso a consultar Usuário'}), 403
     
-    try:
-        tipo_usuario = request.args.get('tipo_usuario', default=None, type=str)
-        id_usuario = request.args.get('id_usuario', default=None, type=int)
-        id = request.args.get('id', default=None, type=int)
-        status = request.args.get('status', default=None, type=str)
-
-        # Inicializa uma lista de condições para a cláusula WHERE
-        conditions = []
-
-        # Adiciona a condição para o parâmetro 'tipo_usuario' se ele estiver presente
-        if tipo_usuario:
-            conditions.append("AND CASE WHEN u.tipo_usuario = 'C' THEN 'Cliente' ELSE 'Funcionário' END = %s")
-
-        # Adiciona a condição para o parâmetro 'id_usuario' se ele estiver presente
-        if id_usuario:
-            conditions.append("AND u.id_usuario = %s")
-
-        # Adiciona a condição para o parâmetro 'id' se ele estiver presente
-        if id:
-            conditions.append("AND COALESCE(u.id_cliente, u.id_funcionario) = %s")
-
-        # Adiciona a condição para o parâmetro 'status' se ele estiver presente
-        if status:
-            conditions.append("AND u.status = %s")
-
-        # Constrói a cláusula WHERE combinando as condições com 'AND'
-        where_clause = " ".join(conditions)
-
-        # Constrói a consulta SQL com a cláusula WHERE
-        query = f"""
-                    SELECT
-                        CASE WHEN u.tipo_usuario = 'C' THEN 'Cliente' ELSE 'Funcionário' END AS tipo_usuario,
-                        COALESCE(u.id_cliente, u.id_funcionario) AS id,
-                        COALESCE(c.nome, f.nome) AS nome,
-                        u.id_usuario,
-                        u.data_cadastro,
-                        u.email,
-                        u.status
-                    FROM usuario u
-                    LEFT JOIN cliente c ON c.id_cliente = u.id_cliente
-                    LEFT JOIN funcionario f ON f.id_funcionario = u.id_funcionario
-                    WHERE 1=1 {where_clause}
-                """
-
-        # Parâmetros a serem passados na consulta
-        params = [tipo_usuario, id_usuario, id, status]
-
-        # Remove None da lista de parâmetros para os que não foram fornecidos
-        params = [param for param in params if param is not None]
-
-        # Executa a consulta SQL
-        resultado = conexao.execute_query(query, params)
-
-        if resultado:
-            colunas = [column[0] for column in conexao.cursor.description]
-            usuarios = [dict(zip(colunas, usuario)) for usuario in resultado]
-            return jsonify(usuarios)
-        else:
-            return jsonify([])
-    except Exception as e:
-        logger.error(f"Erro ao obter usuários: {str(e)}")
-        return jsonify({'message': 'Erro ao obter usuários'}), 500
-
+@usuario_bp.route('/usuarios2', methods=['GET'])
 def verifica_acesso(id_usuario, tipo, acesso):
     try:
         if tipo == 'GET':
@@ -199,16 +123,15 @@ def verifica_acesso(id_usuario, tipo, acesso):
             tipo = 'alterar'
         elif tipo == 'DELETE':
             tipo = 'excluir'
-
         query = """
                   select case when count(1) = 0 then 'N' else 'S' end as possui_acesso
                     from usuario a
-                    left join funcionario f on a.id_funcionario = f.id_funcionario
+                    left join funcionario f on f.id_usuario = a.id_usuario
                     left join funcao f2 on f2.id_funcao = f.id_funcao
                     left join funcao_acesso fa on fa.id_funcao = coalesce(f2.id_funcao,
                                                                         (select f3.id_funcao  
                                                                             from funcao f3 
-                                                                            where f3.descricao = 'Cliente'))
+                                                                           where f3.nome = 'Cliente'))
                   where a.status = 'A'
                     and fa.id_acesso = %s
                     and a.id_usuario = %s
@@ -218,17 +141,14 @@ def verifica_acesso(id_usuario, tipo, acesso):
                              when %s = 'excluir'   and fa.excluir   = 'S' then 'S'
                         end = 'S';
                 """
-
         params = (acesso, id_usuario, tipo, tipo, tipo, tipo)
-
         logger.info(acesso)
         logger.info(id_usuario)
         logger.info(tipo)
-
         resultado = conexao.execute_query(query, params)
         logger.info(resultado[0][0])
         return resultado[0][0] == 'S'
-
     except Exception as e:
         logger.error(f"Erro ao verificar acesso: {str(e)}")
         return False
+        return jsonify({'message': 'Erro ao deletar usuário'}), 500

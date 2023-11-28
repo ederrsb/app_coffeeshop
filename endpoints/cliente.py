@@ -12,11 +12,16 @@ conexao = Conexao()
 @verifica_token
 def obter_clientes(payload):
     id_usuario = payload['id_usuario']
-    if not verifica_acesso(id_usuario, request.method, 'cliente'):
-        return jsonify({'message': 'Usuário não possui acesso a consultar Cliente'}), 403
+    # Se não tem acesso poderá consultar apenas o próprio
+    if verifica_acesso(id_usuario, request.method, 'cliente'):
+       id_usuario = '' 
     
     try:
-        query = 'SELECT * FROM cliente'
+        if id_usuario:
+            query = f"SELECT * FROM cliente WHERE id_usuario = '{id_usuario}'"
+        else:
+            query = 'SELECT * FROM cliente'
+
         resultado = conexao.execute_query(query)
 
         if resultado:
@@ -30,18 +35,13 @@ def obter_clientes(payload):
         return jsonify({'message': 'Erro ao obter clientes'}), 500
 
 @cliente_bp.route('/clientes', methods=['POST'])
-@verifica_token
-def inserir_cliente(payload):
-    id_usuario = payload['id_usuario']
-    if not verifica_acesso(id_usuario, request.method, 'cliente'):
-        return jsonify({'message': 'Usuário não possui acesso a inserir Cliente'}), 403
-    
+def inserir_cliente():
     try:
         dados_cliente = request.get_json()
-
+        
         query = """
-                INSERT INTO db_coffeeshop.cliente (nome, cpf, rg, nascimento, genero, celular)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                INSERT INTO db_coffeeshop.cliente (nome, cpf, rg, nascimento, genero, celular, id_usuario)
+                VALUES (%s, %s, %s, str_to_date(%s, '%d/%m/%Y'), %s, %s, %s)
                 """
 
         params = (
@@ -51,6 +51,7 @@ def inserir_cliente(payload):
             dados_cliente['nascimento'],
             dados_cliente['genero'],
             dados_cliente.get('celular', None),
+            dados_cliente.get('id_usuario', None),
         )
 
         conexao.execute_query(query, params)
@@ -65,17 +66,25 @@ def inserir_cliente(payload):
 @verifica_token
 def atualizar_cliente(payload, id_cliente):
     id_usuario = payload['id_usuario']
-    if not verifica_acesso(id_usuario, request.method, 'cliente'):
-        return jsonify({'message': 'Usuário não possui acesso a alterar Cliente'}), 403
+    if verifica_acesso(id_usuario, request.method, 'cliente'):
+       id_usuario = '' 
     
     try:
         dados_cliente = request.get_json()
 
-        query = """
-                    UPDATE db_coffeeshop.cliente
-                    SET nome = %s, cpf = %s, rg = %s, nascimento = %s, genero = %s, celular = %s
-                    WHERE id_cliente = %s
-                """
+        if id_usuario:
+            query = f"""
+                        UPDATE db_coffeeshop.cliente
+                        SET nome = %s, cpf = %s, rg = %s, nascimento = %s, genero = %s, celular = %s
+                        WHERE id_cliente = %s
+                        and id_usuario = '{id_usuario}'
+                    """
+        else:
+            query = """
+                        UPDATE db_coffeeshop.cliente
+                        SET nome = %s, cpf = %s, rg = %s, nascimento = %s, genero = %s, celular = %s
+                        WHERE id_cliente = %s
+                    """
 
         params = (
             dados_cliente['nome'],

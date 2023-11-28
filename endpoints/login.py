@@ -27,24 +27,29 @@ def login_usuario():
         resultados = conexao.execute_query(query, params)
 
         # Certifique-se de que há pelo menos um resultado na lista
-        if not resultados:
+        if not resultados or len(resultados) == 0:
             return jsonify({'message': 'Usuário não encontrado'}), 404
 
         # Pegue o primeiro resultado
         usuario = resultados[0]
-        hash_senha = usuario[6]  # O índice 6 é assumido com base na estrutura da tabela
+
+        # Certifique-se de que a tupla tem os elementos esperados
+        if len(usuario) < 5:
+            return jsonify({'message': 'Formato de usuário inválido'}), 500
+
+        hash_senha = usuario[3]  # O índice 3 é a posição da senha na nova estrutura da tabela
 
         # Verifica se a senha fornecida coincide com a senha armazenada
         if hash_senha and bcrypt.checkpw(senha.encode('utf-8'), hash_senha.encode('utf-8')):
             # Senhas coincidem, gera o token JWT
             token_payload = {
-                'id_usuario': usuario[0],  # Substitua pelo índice correto se necessário
-                'email': usuario[5]  # Substitua pelo índice correto se necessário
+                'id_usuario': usuario[0],
+                'email': usuario[2]
             }
             token = jwt.encode(token_payload, chave_secreta, algorithm='HS256')
 
             # Retorna o token no formato JSON
-            return jsonify({'token': token, 'message': 'Login bem-sucedido'}), 200
+            return jsonify({'token': token, 'id_usuario': usuario[0], 'message': 'Login bem-sucedido'}), 200
         else:
             # Senhas não coincidem, retorno de falha
             return jsonify({'message': 'Credenciais inválidas'}), 401
@@ -52,6 +57,7 @@ def login_usuario():
     except Exception as e:
         logger.error(f"Erro durante o login: {str(e)}")
         return jsonify({'message': 'Erro durante o login'}), 500
+
 
 def verifica_token(f):
     @wraps(f)

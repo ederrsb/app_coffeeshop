@@ -1,0 +1,1466 @@
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://endpoints:5550
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:venda:Teste
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 14:53:03] "GET /vendas HTTP/1.1" 200 -
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 14:53:57] "GET /itens?id_item=1 HTTP/1.1" 200 -
+INFO:venda:Teste
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:07:47] "GET /vendas HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://endpoints:5550
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:13:29] "GET /vendas HTTP/1.1" 200 -
+INFO:venda:Inicio "vendas_itens"
+INFO:venda:3
+INFO:venda:None
+INFO:venda:5
+INFO:venda:70
+INFO:venda:15
+INFO:venda:250
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:14:02] "PUT /vendas_itens/2/3 HTTP/1.1" 200 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    query = 'SELECT * FROM venda'
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:19:03] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    query = 'SELECT * FROM venda'
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:19:12] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    query = 'SELECT * FROM venda'
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:19:41] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:20:40] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:20:42] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:20:46] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:20:47] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:20:49] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:20:53] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:21:12] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:21:39] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /itens [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/item.py", line 75, in obter_itens
+    resultado = conexao.execute_query(query, params)
+  File "/endpoints/conexao_db.py", line 29, in execute_query
+    self.cursor.execute(query, params)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:21:43] "[35m[1mGET /itens?id_item=1 HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:22:37] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas/3 [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 34, in obter_venda
+    resultado = conexao.execute_query(query, (id_venda,))
+  File "/endpoints/conexao_db.py", line 29, in execute_query
+    self.cursor.execute(query, params)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:22:42] "[35m[1mGET /vendas/3 HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:22:47] "[33mGET /vendas/ HTTP/1.1[0m" 404 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    resultado = conexao.execute_query(query)
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:22:57] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://endpoints:5550
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:24:00] "GET /vendas HTTP/1.1" 200 -
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:24:03] "GET /vendas HTTP/1.1" 200 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    query = 'SELECT * FROM venda'
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:24:37] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 22, in obter_vendas
+    query = 'SELECT * FROM venda'
+  File "/endpoints/conexao_db.py", line 31, in execute_query
+    self.cursor.execute(query)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:24:40] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://endpoints:5550
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+DEBUG:venda:Cabeçalhos: User-Agent: PostmanRuntime/7.34.0
+Accept: */*
+Postman-Token: 2937bd33-cb2e-48f3-84a4-6a124d15c27e
+Host: localhost:5550
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+
+DEBUG:venda:Endpoint: venda.obter_vendas
+DEBUG:venda:Método: GET
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:25:05] "GET /vendas HTTP/1.1" 200 -
+DEBUG:venda:Cabeçalhos: User-Agent: PostmanRuntime/7.34.0
+Accept: */*
+Postman-Token: 2b38adeb-be36-4510-8224-3fb99960bcbb
+Host: localhost:5550
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+
+
+DEBUG:venda:Endpoint: venda.obter_vendas
+DEBUG:venda:Método: GET
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:25:15] "GET /vendas HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://endpoints:5550
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 10, in obter_vendas
+    logger.info('Acesso à página inicial.')
+NameError: name 'logger' is not defined
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:29:24] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 10, in obter_vendas
+    logger.info('Acesso à página inicial.')
+NameError: name 'logger' is not defined
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:29:29] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:29:53] "GET /itens?id_item=1 HTTP/1.1" 200 -
+ERROR:app:Exception on /vendas [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 10, in obter_vendas
+    logger.info('Acesso à página inicial.')
+NameError: name 'logger' is not defined
+INFO:werkzeug:192.168.65.1 - - [11/Nov/2023 15:30:00] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+2023-11-11 15:43:19,553 [INFO] [_internal.py:96] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://endpoints:5550
+2023-11-11 15:43:19,553 [INFO] [_internal.py:96] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://endpoints:5550
+2023-11-11 15:43:19,553 [INFO] [_internal.py:96] - [33mPress CTRL+C to quit[0m
+2023-11-11 15:43:19,553 [INFO] [_internal.py:96] - [33mPress CTRL+C to quit[0m
+2023-11-11 15:43:34,371 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:43:34] "GET /vendas HTTP/1.1" 200 -
+2023-11-11 15:43:34,371 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:43:34] "GET /vendas HTTP/1.1" 200 -
+2023-11-11 15:44:40,018 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:44:40] "GET /itens?id_item=1 HTTP/1.1" 200 -
+2023-11-11 15:44:40,018 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:44:40] "GET /itens?id_item=1 HTTP/1.1" 200 -
+2023-11-11 15:44:51,264 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:44:51] "GET /vendas HTTP/1.1" 200 -
+2023-11-11 15:44:51,264 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:44:51] "GET /vendas HTTP/1.1" 200 -
+2023-11-11 15:45:00,865 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:45:00] "PUT /vendas_itens/2/3 HTTP/1.1" 200 -
+2023-11-11 15:45:00,865 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:45:00] "PUT /vendas_itens/2/3 HTTP/1.1" 200 -
+2023-11-11 15:46:22,407 [ERROR] [app.py:825] - Exception on /vendas_itens/2/3 [PUT]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 227, in atualizar_venda_item
+    conexao.execute_query(query, params)
+  File "/endpoints/conexao_db.py", line 29, in execute_query
+    self.cursor.execute(query, params)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 15:46:22,407 [ERROR] [app.py:825] - Exception on /vendas_itens/2/3 [PUT]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 227, in atualizar_venda_item
+    conexao.execute_query(query, params)
+  File "/endpoints/conexao_db.py", line 29, in execute_query
+    self.cursor.execute(query, params)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 15:46:22,412 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:46:22] "[35m[1mPUT /vendas_itens/2/3 HTTP/1.1[0m" 500 -
+2023-11-11 15:46:22,412 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:46:22] "[35m[1mPUT /vendas_itens/2/3 HTTP/1.1[0m" 500 -
+2023-11-11 15:46:30,868 [ERROR] [app.py:825] - Exception on /vendas_itens/2/3 [PUT]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 227, in atualizar_venda_item
+    conexao.execute_query(query, params)
+  File "/endpoints/conexao_db.py", line 29, in execute_query
+    self.cursor.execute(query, params)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 15:46:30,868 [ERROR] [app.py:825] - Exception on /vendas_itens/2/3 [PUT]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 639, in cmd_query
+    self._cmysql.query(
+_mysql_connector.MySQLInterfaceError: Lost connection to MySQL server during query
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/endpoints/venda.py", line 227, in atualizar_venda_item
+    conexao.execute_query(query, params)
+  File "/endpoints/conexao_db.py", line 29, in execute_query
+    self.cursor.execute(query, params)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/cursor_cext.py", line 330, in execute
+    result = self._cnx.cmd_query(
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/opentelemetry/context_propagation.py", line 77, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/mysql/connector/connection_cext.py", line 647, in cmd_query
+    raise get_mysql_exception(
+mysql.connector.errors.OperationalError: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 15:46:30,872 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:46:30] "[35m[1mPUT /vendas_itens/2/3 HTTP/1.1[0m" 500 -
+2023-11-11 15:46:30,872 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:46:30] "[35m[1mPUT /vendas_itens/2/3 HTTP/1.1[0m" 500 -
+2023-11-11 15:46:45,901 [ERROR] [venda.py:27] - Erro ao obter vendas: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 15:46:45,901 [ERROR] [venda.py:27] - Erro ao obter vendas: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 15:46:45,905 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:46:45] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+2023-11-11 15:46:45,905 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:46:45] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+2023-11-11 15:47:09,132 [ERROR] [venda.py:27] - Erro ao obter vendas: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 15:47:09,132 [ERROR] [venda.py:27] - Erro ao obter vendas: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 15:47:09,136 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:47:09] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+2023-11-11 15:47:09,136 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:47:09] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+2023-11-11 15:48:40,057 [INFO] [_internal.py:96] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://endpoints:5550
+2023-11-11 15:48:40,057 [INFO] [_internal.py:96] - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://endpoints:5550
+2023-11-11 15:48:40,058 [INFO] [_internal.py:96] - [33mPress CTRL+C to quit[0m
+2023-11-11 15:48:40,058 [INFO] [_internal.py:96] - [33mPress CTRL+C to quit[0m
+2023-11-11 15:48:40,059 [INFO] [_internal.py:96] -  * Restarting with stat
+2023-11-11 15:48:40,059 [INFO] [_internal.py:96] -  * Restarting with stat
+2023-11-11 15:48:40,158 [WARNING] [_internal.py:96] -  * Debugger is active!
+2023-11-11 15:48:40,158 [WARNING] [_internal.py:96] -  * Debugger is active!
+2023-11-11 15:48:40,159 [INFO] [_internal.py:96] -  * Debugger PIN: 573-972-406
+2023-11-11 15:48:40,159 [INFO] [_internal.py:96] -  * Debugger PIN: 573-972-406
+2023-11-11 15:48:56,620 [ERROR] [venda.py:26] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 15:48:56,620 [ERROR] [venda.py:26] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 15:48:56,625 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:48:56] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+2023-11-11 15:48:56,625 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:48:56] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+2023-11-11 15:49:02,209 [ERROR] [venda.py:26] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 15:49:02,209 [ERROR] [venda.py:26] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 15:49:02,212 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:49:02] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+2023-11-11 15:49:02,212 [INFO] [_internal.py:96] - 192.168.65.1 - - [11/Nov/2023 15:49:02] "[35m[1mGET /vendas HTTP/1.1[0m" 500 -
+2023-11-11 15:57:39,103 [INFO] [_internal.py:96] -  * Detected change in '/endpoints/venda.py', reloading
+2023-11-11 15:57:39,103 [INFO] [_internal.py:96] -  * Detected change in '/endpoints/venda.py', reloading
+2023-11-11 15:57:39,164 [INFO] [_internal.py:96] -  * Restarting with stat
+2023-11-11 15:57:39,164 [INFO] [_internal.py:96] -  * Restarting with stat
+2023-11-11 16:02:16,427 [ERROR] [venda.py:24] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 16:02:16,427 [ERROR] [venda.py:24] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 16:02:21,437 [ERROR] [venda.py:24] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 16:02:21,437 [ERROR] [venda.py:24] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 16:02:43,518 [ERROR] [venda.py:24] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 16:02:43,518 [ERROR] [venda.py:24] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 16:05:38,899 [INFO] [venda.py:13] - Operação bem-sucedida.
+2023-11-11 16:05:38,899 [INFO] [venda.py:13] - Operação bem-sucedida.
+2023-11-11 16:05:38,915 [ERROR] [venda.py:24] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 16:05:38,915 [ERROR] [venda.py:24] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 16:10:31,024 [INFO] [venda.py:13] - Operação bem-sucedida.
+2023-11-11 16:10:31,038 [ERROR] [venda.py:24] - Erro ao obter vendas: 1146 (42S02): Table 'db_coffeeshop.vendax' doesn't exist
+2023-11-11 16:18:21,719 [ERROR] [venda.py:23] - Erro ao obter vendas: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 16:18:28,697 [ERROR] [venda.py:23] - Erro ao obter vendas: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 16:19:48,665 [ERROR] [venda.py:175] - Erro ao atualizar venda: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`venda`, CONSTRAINT `venda_FK` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`))
+2023-11-11 16:20:26,035 [ERROR] [venda.py:253] - Erro ao atualizar item da venda: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`venda_item`, CONSTRAINT `venda_item_FK` FOREIGN KEY (`id_item`) REFERENCES `item` (`id_item`))
+2023-11-11 16:24:35,013 [ERROR] [venda.py:267] - Erro ao excluir item da venda: 2013 (HY000): Lost connection to MySQL server during query
+2023-11-11 20:31:24,047 [ERROR] [assinatura.py:101] - Erro ao obter itens das assinaturas: name 'request' is not defined
+2023-11-11 20:31:31,725 [ERROR] [assinatura.py:101] - Erro ao obter itens das assinaturas: name 'request' is not defined
+2023-11-11 20:31:58,617 [ERROR] [assinatura.py:101] - Erro ao obter itens das assinaturas: Python type list cannot be converted
+2023-11-11 20:32:12,549 [ERROR] [assinatura.py:101] - Erro ao obter itens das assinaturas: Python type list cannot be converted
+2023-11-11 20:32:19,838 [ERROR] [assinatura.py:101] - Erro ao obter itens das assinaturas: Python type list cannot be converted
+2023-11-11 20:35:55,669 [ERROR] [assinatura.py:101] - Erro ao obter itens das assinaturas: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%s
+                 order by 1, 2, 3' at line 11
+2023-11-11 21:10:19,234 [ERROR] [assinatura.py:159] - Erro ao atualizar assinatura: 'periodicidade'
+2023-11-11 21:11:56,049 [ERROR] [assinatura.py:159] - Erro ao atualizar assinatura: 'periodicidade'
+2023-11-11 21:18:21,430 [ERROR] [assinatura.py:197] - Erro ao inserir item de assinatura: 'id_assinatura'
+2023-11-11 21:18:57,582 [ERROR] [assinatura.py:196] - Erro ao inserir item de assinatura: Not enough parameters for the SQL statement
+2023-11-11 21:19:09,742 [ERROR] [assinatura.py:196] - Erro ao inserir item de assinatura: 1364 (HY000): Field 'id_assinatura' doesn't have a default value
+2023-11-11 21:19:54,358 [ERROR] [assinatura.py:197] - Erro ao inserir item de assinatura: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`assinatura_item`, CONSTRAINT `assinatura_item_FK` FOREIGN KEY (`id_assinatura`) REFERENCES `assinatura` (`id_assinatura`))
+2023-11-11 21:20:12,822 [ERROR] [assinatura.py:197] - Erro ao inserir item de assinatura: 1062 (23000): Duplicate entry '2-2' for key 'assinatura_item.PRIMARY'
+2023-11-11 21:46:55,880 [ERROR] [item_conta_estoque.py:47] - Erro ao inserir item de conta de estoque: 400 Bad Request: Failed to decode JSON object: Expecting ',' delimiter: line 3 column 5 (char 25)
+2023-11-11 21:47:18,155 [ERROR] [item_conta_estoque.py:47] - Erro ao inserir item de conta de estoque: 400 Bad Request: Failed to decode JSON object: Expecting ',' delimiter: line 3 column 5 (char 25)
+2023-11-11 21:48:32,344 [ERROR] [item_conta_estoque.py:47] - Erro ao inserir item de conta de estoque: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'now())
+            VALUES ('1', '3', '0', '0', '0')' at line 1
+2023-11-11 21:49:00,171 [ERROR] [item_conta_estoque.py:47] - Erro ao inserir item de conta de estoque: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'now())
+            VALUES ('1', '3', '0', '0', '0')' at line 1
+2023-11-11 21:50:57,271 [ERROR] [item_conta_estoque.py:47] - Erro ao inserir item de conta de estoque: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'now())
+            VALUES ('1', '3', '0', '0', '0')' at line 1
+2023-11-12 13:36:29,343 [ERROR] [item_conta_estoque.py:75] - Erro ao atualizar item de conta de estoque: 'data_atualizacao'
+2023-11-12 14:58:41,778 [ERROR] [cliente_endereco.py:23] - Erro ao obter endereços do cliente: 1146 (42S02): Table 'db_coffeeshop.clientes_endereco' doesn't exist
+2023-11-12 15:02:19,302 [ERROR] [cliente_endereco.py:53] - Erro ao inserir endereço do cliente: 1054 (42S22): Unknown column 'cep' in 'field list'
+2023-11-12 15:03:22,772 [ERROR] [cliente_endereco.py:53] - Erro ao inserir endereço do cliente: 1054 (42S22): Unknown column 'cep' in 'field list'
+2023-11-12 15:05:24,717 [ERROR] [cliente_endereco.py:53] - Erro ao inserir endereço do cliente: 1054 (42S22): Unknown column 'cep' in 'field list'
+2023-11-12 15:05:32,156 [ERROR] [cliente_endereco.py:53] - Erro ao inserir endereço do cliente: 'cep'
+2023-11-12 15:05:39,354 [ERROR] [cliente_endereco.py:53] - Erro ao inserir endereço do cliente: 1054 (42S22): Unknown column 'cep' in 'field list'
+2023-11-12 15:10:45,847 [ERROR] [cliente_endereco.py:53] - Erro ao inserir endereço do cliente: 1054 (42S22): Unknown column 'cep' in 'field list'
+2023-11-12 15:15:56,136 [ERROR] [cliente_endereco.py:53] - Erro ao inserir endereço do cliente: 1054 (42S22): Unknown column 'cep' in 'field list'
+2023-11-12 15:17:58,968 [ERROR] [cliente_endereco.py:53] - Erro ao inserir endereço do cliente: 1062 (23000): Duplicate entry '1-1' for key 'cliente_endereco.PRIMARY'
+2023-11-12 15:27:31,240 [ERROR] [funcionario.py:47] - Erro ao inserir funcionário: 1292 (22007): Incorrect date value: 'Mon, 06 Nov 2023 00:00:00 GMT' for column 'data_admissao' at row 1
+2023-11-13 14:04:37,532 [ERROR] [usuario.py:50] - Erro ao inserir usuário: 'nome'
+2023-11-13 14:05:40,946 [ERROR] [usuario.py:50] - Erro ao inserir usuário: 1054 (42S22): Unknown column 'nome' in 'field list'
+2023-11-13 14:06:15,433 [ERROR] [usuario.py:50] - Erro ao inserir usuário: 'nome'
+2023-11-13 20:46:06,838 [ERROR] [usuario.py:50] - Erro ao inserir usuário: 'nome'
+2023-11-13 21:38:51,340 [ERROR] [login.py:40] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 21:41:31,334 [ERROR] [login.py:41] - Erro durante o login: local variable 'resultado' referenced before assignment
+2023-11-13 21:42:05,911 [ERROR] [login.py:41] - Erro durante o login: local variable 'resultado' referenced before assignment
+2023-11-13 21:43:22,688 [ERROR] [login.py:41] - Erro durante o login: 'list' object has no attribute 'fetchone'
+2023-11-13 21:44:34,679 [ERROR] [login.py:41] - Erro durante o login: local variable 'resultado' referenced before assignment
+2023-11-13 21:44:56,502 [ERROR] [login.py:41] - Erro durante o login: 'list' object has no attribute 'fetchone'
+2023-11-13 21:45:13,101 [ERROR] [login.py:41] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 21:47:05,226 [ERROR] [login.py:41] - Erro durante o login: 'list' object has no attribute 'fetchone'
+2023-11-13 21:50:33,406 [ERROR] [login.py:41] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 21:53:02,841 [ERROR] [login.py:41] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 21:58:21,827 [ERROR] [login.py:56] - Erro durante o login: tuple indices must be integers or slices, not str
+2023-11-13 22:00:30,273 [ERROR] [login.py:45] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 22:01:12,139 [ERROR] [login.py:45] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 22:02:12,656 [ERROR] [login.py:46] - Erro durante o login: tuple indices must be integers or slices, not str
+2023-11-13 22:43:20,750 [ERROR] [login.py:46] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 22:44:44,963 [ERROR] [login.py:31] - [(3, 1, None, 'C', datetime.date(2023, 3, 3), 'cliente@mail', '$2b$12$pB8nar/D6eSG1CDXG0PlT.MXzCIRLq1c6uAiHboUqgrZK3JLCpgP2', 'A')]
+2023-11-13 22:44:44,966 [ERROR] [login.py:47] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 22:45:52,476 [ERROR] [login.py:31] - [('$2b$12$pB8nar/D6eSG1CDXG0PlT.MXzCIRLq1c6uAiHboUqgrZK3JLCpgP2',)]
+2023-11-13 22:45:52,479 [ERROR] [login.py:47] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 22:46:43,224 [ERROR] [login.py:48] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 22:46:52,181 [ERROR] [login.py:48] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 22:47:14,276 [INFO] [login.py:33] - ('$2b$12$pB8nar/D6eSG1CDXG0PlT.MXzCIRLq1c6uAiHboUqgrZK3JLCpgP2',)
+2023-11-13 22:47:14,282 [ERROR] [login.py:48] - Erro durante o login: 'tuple' object has no attribute 'get'
+2023-11-13 22:49:05,998 [ERROR] [login.py:48] - Erro durante o login: 'CMySQLCursor' object has no attribute 'senha'
+2023-11-13 23:24:54,932 [ERROR] [login.py:46] - Erro durante o login: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2023-11-16 22:09:19,018 [ERROR] [venda.py:142] - Erro ao inserir venda: 400 Bad Request: Failed to decode JSON object: Expecting value: line 1 column 1 (char 0)
+2023-11-16 23:10:25,788 [ERROR] [cliente_endereco.py:87] - Erro ao atualizar endereço do cliente: 'rua'
+2023-11-16 23:10:39,887 [ERROR] [usuario.py:55] - Erro ao inserir usuário: 1292 (22007): Incorrect date value: 'Mon, 06 Nov 2023 00:00:00 GMT' for column 'data_cadastro' at row 1
+2023-11-16 23:10:48,616 [ERROR] [usuario.py:55] - Erro ao inserir usuário: 1292 (22007): Incorrect date value: 'Mon, 06 Nov 2023 00:00:00 GMT' for column 'data_cadastro' at row 1
+2023-11-16 23:10:57,569 [ERROR] [usuario.py:55] - Erro ao inserir usuário: 'data_cadastro'
+2023-11-16 23:15:00,153 [ERROR] [usuario.py:89] - Erro ao atualizar usuário: 'data_cadastro'
+2023-11-18 10:29:58,869 [INFO] [venda.py:16] - (<Response 55 bytes [200 OK]>, 401)
+2023-11-18 10:29:58,873 [INFO] [venda.py:17] - 6
+2023-11-18 10:32:44,730 [INFO] [usuario.py:201] - N
+2023-11-18 10:32:49,935 [INFO] [usuario.py:201] - N
+2023-11-18 10:39:48,488 [INFO] [usuario.py:200] - N
+2023-11-18 10:50:02,476 [INFO] [usuario.py:200] - N
+2023-11-18 11:05:51,119 [INFO] [usuario.py:200] - N
+2023-11-18 11:17:36,987 [ERROR] [usuario.py:200] - Erro ao verificar acesso: tuple indices must be integers or slices, not str
+2023-11-18 11:17:39,701 [ERROR] [usuario.py:200] - Erro ao verificar acesso: tuple indices must be integers or slices, not str
+2023-11-18 11:17:46,115 [ERROR] [usuario.py:200] - Erro ao verificar acesso: tuple indices must be integers or slices, not str
+2023-11-18 11:17:50,576 [ERROR] [usuario.py:200] - Erro ao verificar acesso: tuple indices must be integers or slices, not str
+2023-11-18 11:17:52,541 [ERROR] [usuario.py:200] - Erro ao verificar acesso: tuple indices must be integers or slices, not str
+2023-11-18 11:18:03,867 [ERROR] [usuario.py:200] - Erro ao verificar acesso: tuple indices must be integers or slices, not str
+2023-11-18 11:18:05,645 [ERROR] [usuario.py:200] - Erro ao verificar acesso: tuple indices must be integers or slices, not str
+2023-11-18 11:18:16,919 [ERROR] [usuario.py:200] - Erro ao verificar acesso: tuple indices must be integers or slices, not str
+2023-11-18 11:20:48,646 [INFO] [usuario.py:196] - N
+2023-11-18 11:21:03,358 [INFO] [usuario.py:196] - N
+2023-11-18 11:21:59,439 [INFO] [usuario.py:196] - consultar
+2023-11-18 11:21:59,441 [INFO] [usuario.py:197] - vendas
+2023-11-18 11:21:59,441 [INFO] [usuario.py:198] - 6
+2023-11-18 11:21:59,441 [INFO] [usuario.py:199] - N
+2023-11-18 11:23:28,935 [INFO] [usuario.py:196] - consultar
+2023-11-18 11:23:28,938 [INFO] [usuario.py:197] - venda
+2023-11-18 11:23:28,938 [INFO] [usuario.py:198] - 6
+2023-11-18 11:23:28,938 [INFO] [usuario.py:199] - N
+2023-11-18 11:23:34,399 [INFO] [usuario.py:196] - consultar
+2023-11-18 11:23:34,401 [INFO] [usuario.py:197] - venda
+2023-11-18 11:23:34,403 [INFO] [usuario.py:198] - 6
+2023-11-18 11:23:34,404 [INFO] [usuario.py:199] - N
+2023-11-18 11:24:48,960 [INFO] [usuario.py:196] - venda
+2023-11-18 11:24:48,962 [INFO] [usuario.py:197] - 6
+2023-11-18 11:24:48,963 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:24:48,963 [INFO] [usuario.py:199] - S
+2023-11-18 11:25:07,159 [INFO] [usuario.py:196] - venda
+2023-11-18 11:25:07,161 [INFO] [usuario.py:197] - 6
+2023-11-18 11:25:07,161 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:25:07,161 [INFO] [usuario.py:199] - S
+2023-11-18 11:32:16,259 [INFO] [usuario.py:196] - venda
+2023-11-18 11:32:16,262 [INFO] [usuario.py:197] - 6
+2023-11-18 11:32:16,262 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:32:16,262 [INFO] [usuario.py:199] - S
+2023-11-18 11:32:18,768 [INFO] [usuario.py:196] - venda
+2023-11-18 11:32:18,769 [INFO] [usuario.py:197] - 6
+2023-11-18 11:32:18,769 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:32:18,770 [INFO] [usuario.py:199] - S
+2023-11-18 11:32:54,630 [INFO] [usuario.py:196] - venda
+2023-11-18 11:32:54,633 [INFO] [usuario.py:197] - 6
+2023-11-18 11:32:54,633 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:32:54,634 [INFO] [usuario.py:199] - S
+2023-11-18 11:36:25,417 [INFO] [usuario.py:196] - venda
+2023-11-18 11:36:25,418 [INFO] [usuario.py:197] - 6
+2023-11-18 11:36:25,418 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:36:25,419 [INFO] [usuario.py:199] - N
+2023-11-18 11:36:25,419 [INFO] [venda.py:14] - False
+2023-11-18 11:36:25,420 [INFO] [usuario.py:196] - venda
+2023-11-18 11:36:25,420 [INFO] [usuario.py:197] - 6
+2023-11-18 11:36:25,420 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:36:25,420 [INFO] [usuario.py:199] - N
+2023-11-18 11:36:31,262 [INFO] [usuario.py:196] - venda
+2023-11-18 11:36:31,262 [INFO] [usuario.py:197] - 6
+2023-11-18 11:36:31,263 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:36:31,263 [INFO] [usuario.py:199] - N
+2023-11-18 11:36:31,264 [INFO] [venda.py:14] - False
+2023-11-18 11:36:31,267 [INFO] [usuario.py:196] - venda
+2023-11-18 11:36:31,268 [INFO] [usuario.py:197] - 6
+2023-11-18 11:36:31,268 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:36:31,269 [INFO] [usuario.py:199] - N
+2023-11-18 11:36:32,597 [INFO] [usuario.py:196] - venda
+2023-11-18 11:36:32,598 [INFO] [usuario.py:197] - 6
+2023-11-18 11:36:32,599 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:36:32,599 [INFO] [usuario.py:199] - N
+2023-11-18 11:36:32,600 [INFO] [venda.py:14] - False
+2023-11-18 11:36:32,601 [INFO] [usuario.py:196] - venda
+2023-11-18 11:36:32,602 [INFO] [usuario.py:197] - 6
+2023-11-18 11:36:32,602 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:36:32,603 [INFO] [usuario.py:199] - N
+2023-11-18 11:36:38,343 [INFO] [usuario.py:196] - venda
+2023-11-18 11:36:38,344 [INFO] [usuario.py:197] - 6
+2023-11-18 11:36:38,344 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:36:38,345 [INFO] [usuario.py:199] - N
+2023-11-18 11:36:38,345 [INFO] [venda.py:14] - False
+2023-11-18 11:36:38,347 [INFO] [usuario.py:196] - venda
+2023-11-18 11:36:38,347 [INFO] [usuario.py:197] - 6
+2023-11-18 11:36:38,348 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:36:38,348 [INFO] [usuario.py:199] - N
+2023-11-18 11:37:08,846 [INFO] [usuario.py:196] - venda
+2023-11-18 11:37:08,849 [INFO] [usuario.py:197] - 6
+2023-11-18 11:37:08,849 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:37:08,849 [INFO] [usuario.py:199] - N
+2023-11-18 11:37:08,849 [INFO] [venda.py:14] - False
+2023-11-18 11:37:08,850 [INFO] [usuario.py:196] - venda
+2023-11-18 11:37:08,850 [INFO] [usuario.py:197] - 6
+2023-11-18 11:37:08,850 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:37:08,851 [INFO] [usuario.py:199] - N
+2023-11-18 11:37:11,015 [INFO] [usuario.py:196] - venda
+2023-11-18 11:37:11,016 [INFO] [usuario.py:197] - 6
+2023-11-18 11:37:11,017 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:37:11,017 [INFO] [usuario.py:199] - N
+2023-11-18 11:37:11,018 [INFO] [venda.py:14] - False
+2023-11-18 11:37:11,019 [INFO] [usuario.py:196] - venda
+2023-11-18 11:37:11,020 [INFO] [usuario.py:197] - 6
+2023-11-18 11:37:11,020 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:37:11,021 [INFO] [usuario.py:199] - N
+2023-11-18 11:37:12,025 [INFO] [usuario.py:196] - venda
+2023-11-18 11:37:12,026 [INFO] [usuario.py:197] - 6
+2023-11-18 11:37:12,027 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:37:12,027 [INFO] [usuario.py:199] - N
+2023-11-18 11:37:12,028 [INFO] [venda.py:14] - False
+2023-11-18 11:37:12,030 [INFO] [usuario.py:196] - venda
+2023-11-18 11:37:12,031 [INFO] [usuario.py:197] - 6
+2023-11-18 11:37:12,049 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:37:12,050 [INFO] [usuario.py:199] - N
+2023-11-18 11:37:13,571 [INFO] [usuario.py:196] - venda
+2023-11-18 11:37:13,572 [INFO] [usuario.py:197] - 6
+2023-11-18 11:37:13,573 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:37:13,573 [INFO] [usuario.py:199] - N
+2023-11-18 11:37:13,573 [INFO] [venda.py:14] - False
+2023-11-18 11:37:13,575 [INFO] [usuario.py:196] - venda
+2023-11-18 11:37:13,576 [INFO] [usuario.py:197] - 6
+2023-11-18 11:37:13,576 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:37:13,577 [INFO] [usuario.py:199] - N
+2023-11-18 11:37:56,556 [INFO] [usuario.py:196] - venda
+2023-11-18 11:37:56,558 [INFO] [usuario.py:197] - 6
+2023-11-18 11:37:56,558 [INFO] [usuario.py:198] - consultar
+2023-11-18 11:37:56,558 [INFO] [usuario.py:199] - S
+2023-11-18 11:49:24,986 [INFO] [venda.py:13] - GET
+2023-11-18 18:36:08,641 [ERROR] [usuario.py:228] - Erro ao verificar acesso: 1054 (42S22): Unknown column 'pa.acesso' in 'where clause'
+2023-11-18 18:36:32,311 [ERROR] [usuario.py:228] - Erro ao verificar acesso: 1054 (42S22): Unknown column 'pa.acesso' in 'where clause'
+2023-11-18 19:06:42,928 [INFO] [usuario.py:224] - funcao
+2023-11-18 19:06:42,932 [INFO] [usuario.py:225] - 6
+2023-11-18 19:06:42,932 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:06:42,942 [INFO] [usuario.py:229] - N
+2023-11-18 19:08:10,174 [INFO] [usuario.py:224] - funcao
+2023-11-18 19:08:10,176 [INFO] [usuario.py:225] - 4
+2023-11-18 19:08:10,176 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:08:10,186 [INFO] [usuario.py:229] - S
+2023-11-18 19:08:25,028 [INFO] [usuario.py:224] - funcao
+2023-11-18 19:08:25,031 [INFO] [usuario.py:225] - 6
+2023-11-18 19:08:25,031 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:08:25,049 [INFO] [usuario.py:229] - N
+2023-11-18 19:08:32,636 [INFO] [usuario.py:224] - venda
+2023-11-18 19:08:32,638 [INFO] [usuario.py:225] - 6
+2023-11-18 19:08:32,639 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:08:32,646 [INFO] [usuario.py:229] - S
+2023-11-18 19:15:24,568 [INFO] [usuario.py:224] - funcao_acesso
+2023-11-18 19:15:24,570 [INFO] [usuario.py:225] - 6
+2023-11-18 19:15:24,571 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:15:24,584 [INFO] [usuario.py:229] - N
+2023-11-18 19:16:53,349 [INFO] [usuario.py:224] - funcao_acesso
+2023-11-18 19:16:53,352 [INFO] [usuario.py:225] - 4
+2023-11-18 19:16:53,352 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:16:53,361 [INFO] [usuario.py:229] - S
+2023-11-18 19:53:10,550 [INFO] [usuario.py:224] - carrinho
+2023-11-18 19:53:10,552 [INFO] [usuario.py:225] - 4
+2023-11-18 19:53:10,553 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:53:10,570 [INFO] [usuario.py:229] - N
+2023-11-18 19:53:13,262 [INFO] [usuario.py:224] - carrinho
+2023-11-18 19:53:13,263 [INFO] [usuario.py:225] - 4
+2023-11-18 19:53:13,264 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:53:13,268 [INFO] [usuario.py:229] - N
+2023-11-18 19:53:37,302 [INFO] [usuario.py:224] - carrinho
+2023-11-18 19:53:37,304 [INFO] [usuario.py:225] - 4
+2023-11-18 19:53:37,304 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:53:37,310 [INFO] [usuario.py:229] - N
+2023-11-18 19:54:02,882 [INFO] [usuario.py:224] - carrinho
+2023-11-18 19:54:02,885 [INFO] [usuario.py:225] - 4
+2023-11-18 19:54:02,885 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:54:02,893 [INFO] [usuario.py:229] - S
+2023-11-18 19:54:39,814 [INFO] [usuario.py:224] - carrinho
+2023-11-18 19:54:39,817 [INFO] [usuario.py:225] - 4
+2023-11-18 19:54:39,817 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:54:39,825 [INFO] [usuario.py:229] - S
+2023-11-18 19:54:48,079 [INFO] [usuario.py:224] - carrinho
+2023-11-18 19:54:48,080 [INFO] [usuario.py:225] - 4
+2023-11-18 19:54:48,080 [INFO] [usuario.py:226] - consultar
+2023-11-18 19:54:48,090 [INFO] [usuario.py:229] - S
+2023-11-18 20:01:12,621 [INFO] [usuario.py:224] - carrinho
+2023-11-18 20:01:12,624 [INFO] [usuario.py:225] - 4
+2023-11-18 20:01:12,625 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:01:12,635 [INFO] [usuario.py:229] - S
+2023-11-18 20:18:42,089 [INFO] [usuario.py:224] - venda_item
+2023-11-18 20:18:42,094 [INFO] [usuario.py:225] - 4
+2023-11-18 20:18:42,094 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:18:42,118 [INFO] [usuario.py:229] - S
+2023-11-18 20:18:52,403 [INFO] [usuario.py:224] - venda
+2023-11-18 20:18:52,406 [INFO] [usuario.py:225] - 4
+2023-11-18 20:18:52,407 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:18:52,411 [INFO] [usuario.py:229] - S
+2023-11-18 20:26:13,748 [INFO] [usuario.py:224] - venda_pagamento
+2023-11-18 20:26:13,752 [INFO] [usuario.py:225] - 4
+2023-11-18 20:26:13,753 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:26:13,766 [INFO] [usuario.py:229] - N
+2023-11-18 20:27:12,612 [INFO] [usuario.py:224] - venda_pagamento
+2023-11-18 20:27:12,615 [INFO] [usuario.py:225] - 4
+2023-11-18 20:27:12,616 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:27:12,623 [INFO] [usuario.py:229] - N
+2023-11-18 20:27:39,860 [INFO] [usuario.py:224] - venda_pagamento
+2023-11-18 20:27:39,863 [INFO] [usuario.py:225] - 4
+2023-11-18 20:27:39,863 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:27:39,873 [INFO] [usuario.py:229] - N
+2023-11-18 20:27:46,054 [INFO] [usuario.py:224] - venda_pagamento
+2023-11-18 20:27:46,056 [INFO] [usuario.py:225] - 4
+2023-11-18 20:27:46,057 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:27:46,074 [INFO] [usuario.py:229] - N
+2023-11-18 20:29:20,252 [INFO] [usuario.py:224] - venda_pagamento
+2023-11-18 20:29:20,255 [INFO] [usuario.py:225] - 4
+2023-11-18 20:29:20,255 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:29:20,260 [INFO] [usuario.py:229] - N
+2023-11-18 20:29:24,426 [INFO] [usuario.py:224] - venda_pagamento
+2023-11-18 20:29:24,428 [INFO] [usuario.py:225] - 4
+2023-11-18 20:29:24,429 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:29:24,437 [INFO] [usuario.py:229] - S
+2023-11-18 20:43:30,413 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:43:30,415 [INFO] [usuario.py:225] - 4
+2023-11-18 20:43:30,415 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:43:30,424 [INFO] [usuario.py:229] - N
+2023-11-18 20:44:24,757 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:44:24,758 [INFO] [usuario.py:225] - 4
+2023-11-18 20:44:24,758 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:44:24,764 [INFO] [usuario.py:229] - N
+2023-11-18 20:44:31,969 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:44:31,971 [INFO] [usuario.py:225] - 4
+2023-11-18 20:44:31,974 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:44:31,989 [INFO] [usuario.py:229] - S
+2023-11-18 20:51:01,315 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:51:01,320 [INFO] [usuario.py:225] - 4
+2023-11-18 20:51:01,321 [INFO] [usuario.py:226] - inserir
+2023-11-18 20:51:01,329 [INFO] [usuario.py:229] - S
+2023-11-18 20:51:01,337 [ERROR] [venda_entrega.py:61] - Erro ao inserir dados de entrega: 1292 (22007): Incorrect date value: 'Tue, 28 Nov 2023 00:00:00 GMT' for column 'previsao_entrega' at row 1
+2023-11-18 20:51:18,886 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:51:18,888 [INFO] [usuario.py:225] - 4
+2023-11-18 20:51:18,888 [INFO] [usuario.py:226] - inserir
+2023-11-18 20:51:18,893 [INFO] [usuario.py:229] - S
+2023-11-18 20:51:18,894 [ERROR] [venda_entrega.py:61] - Erro ao inserir dados de entrega: 400 Bad Request: Failed to decode JSON object: Invalid control character at: line 5 column 37 (char 102)
+2023-11-18 20:51:26,532 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:51:26,533 [INFO] [usuario.py:225] - 4
+2023-11-18 20:51:26,534 [INFO] [usuario.py:226] - inserir
+2023-11-18 20:51:26,554 [INFO] [usuario.py:229] - S
+2023-11-18 20:51:26,561 [ERROR] [venda_entrega.py:61] - Erro ao inserir dados de entrega: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`venda_entrega`, CONSTRAINT `venda_entrega_FK_1` FOREIGN KEY (`id_cliente`, `seq`) REFERENCES `cliente_endereco` (`id_cliente`, `seq`))
+2023-11-18 20:51:43,747 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:51:43,750 [INFO] [usuario.py:225] - 4
+2023-11-18 20:51:43,750 [INFO] [usuario.py:226] - inserir
+2023-11-18 20:51:43,758 [INFO] [usuario.py:229] - S
+2023-11-18 20:51:43,762 [ERROR] [venda_entrega.py:61] - Erro ao inserir dados de entrega: 1062 (23000): Duplicate entry '1' for key 'venda_entrega.PRIMARY'
+2023-11-18 20:52:00,069 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:52:00,070 [INFO] [usuario.py:225] - 4
+2023-11-18 20:52:00,070 [INFO] [usuario.py:226] - inserir
+2023-11-18 20:52:00,077 [INFO] [usuario.py:229] - S
+2023-11-18 20:52:12,248 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:52:12,250 [INFO] [usuario.py:225] - 4
+2023-11-18 20:52:12,251 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:52:12,260 [INFO] [usuario.py:229] - S
+2023-11-18 20:52:19,548 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:52:19,549 [INFO] [usuario.py:225] - 4
+2023-11-18 20:52:19,549 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:52:19,552 [INFO] [usuario.py:229] - S
+2023-11-18 20:52:30,698 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:52:30,699 [INFO] [usuario.py:225] - 6
+2023-11-18 20:52:30,700 [INFO] [usuario.py:226] - excluir
+2023-11-18 20:52:30,702 [INFO] [usuario.py:229] - N
+2023-11-18 20:53:25,801 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:53:25,804 [INFO] [usuario.py:225] - 4
+2023-11-18 20:53:25,804 [INFO] [usuario.py:226] - excluir
+2023-11-18 20:53:25,811 [INFO] [usuario.py:229] - S
+2023-11-18 20:53:31,683 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:53:31,684 [INFO] [usuario.py:225] - 4
+2023-11-18 20:53:31,684 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:53:31,686 [INFO] [usuario.py:229] - S
+2023-11-18 20:53:36,745 [INFO] [usuario.py:224] - venda_entrega
+2023-11-18 20:53:36,747 [INFO] [usuario.py:225] - 4
+2023-11-18 20:53:36,748 [INFO] [usuario.py:226] - consultar
+2023-11-18 20:53:36,756 [INFO] [usuario.py:229] - S
+2023-11-19 11:45:57,164 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 11:45:57,168 [INFO] [usuario.py:225] - 4
+2023-11-19 11:45:57,168 [INFO] [usuario.py:226] - inserir
+2023-11-19 11:45:57,179 [INFO] [usuario.py:229] - N
+2023-11-19 11:48:30,234 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 11:48:30,237 [INFO] [usuario.py:225] - 4
+2023-11-19 11:48:30,237 [INFO] [usuario.py:226] - inserir
+2023-11-19 11:48:30,240 [INFO] [usuario.py:229] - S
+2023-11-19 11:48:30,240 [ERROR] [carrinho.py:182] - Erro ao finalizar carrinho: name 'datetime' is not defined
+2023-11-19 11:49:57,964 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 11:49:57,967 [INFO] [usuario.py:225] - 4
+2023-11-19 11:49:57,967 [INFO] [usuario.py:226] - inserir
+2023-11-19 11:49:57,973 [INFO] [usuario.py:229] - S
+2023-11-19 11:49:57,977 [ERROR] [carrinho.py:183] - Erro ao finalizar carrinho: 1054 (42S22): Unknown column 'ci.valor_unitario' in 'field list'
+2023-11-19 12:02:50,361 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:02:50,366 [INFO] [usuario.py:225] - 4
+2023-11-19 12:02:50,366 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:02:50,386 [INFO] [usuario.py:229] - S
+2023-11-19 12:07:16,892 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:07:16,898 [INFO] [usuario.py:225] - 4
+2023-11-19 12:07:16,899 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:07:16,905 [INFO] [usuario.py:229] - S
+2023-11-19 12:07:25,592 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:07:25,594 [INFO] [usuario.py:225] - 4
+2023-11-19 12:07:25,594 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:07:25,598 [INFO] [usuario.py:229] - S
+2023-11-19 12:09:04,598 [INFO] [usuario.py:224] - conta_estoque
+2023-11-19 12:09:04,602 [INFO] [usuario.py:225] - 4
+2023-11-19 12:09:04,602 [INFO] [usuario.py:226] - consultar
+2023-11-19 12:09:04,629 [INFO] [usuario.py:229] - S
+2023-11-19 12:09:47,466 [INFO] [usuario.py:224] - item_conta_estoque
+2023-11-19 12:09:47,468 [INFO] [usuario.py:225] - 4
+2023-11-19 12:09:47,468 [INFO] [usuario.py:226] - consultar
+2023-11-19 12:09:47,477 [INFO] [usuario.py:229] - S
+2023-11-19 12:10:16,286 [INFO] [usuario.py:224] - carrinho
+2023-11-19 12:10:16,288 [INFO] [usuario.py:225] - 4
+2023-11-19 12:10:16,288 [INFO] [usuario.py:226] - consultar
+2023-11-19 12:10:16,295 [INFO] [usuario.py:229] - S
+2023-11-19 12:18:25,580 [INFO] [usuario.py:224] - carrinho
+2023-11-19 12:18:25,585 [INFO] [usuario.py:225] - 4
+2023-11-19 12:18:25,585 [INFO] [usuario.py:226] - consultar
+2023-11-19 12:18:25,591 [INFO] [usuario.py:229] - S
+2023-11-19 12:18:46,238 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:18:46,240 [INFO] [usuario.py:225] - 4
+2023-11-19 12:18:46,241 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:18:46,251 [INFO] [usuario.py:229] - S
+2023-11-19 12:18:51,496 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:18:51,498 [INFO] [usuario.py:225] - 4
+2023-11-19 12:18:51,499 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:18:51,507 [INFO] [usuario.py:229] - S
+2023-11-19 12:22:47,285 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:22:47,288 [INFO] [usuario.py:225] - 4
+2023-11-19 12:22:47,288 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:22:47,293 [INFO] [usuario.py:229] - S
+2023-11-19 12:22:51,528 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:22:51,531 [INFO] [usuario.py:225] - 4
+2023-11-19 12:22:51,532 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:22:51,545 [INFO] [usuario.py:229] - S
+2023-11-19 12:23:23,760 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:23:23,763 [INFO] [usuario.py:225] - 4
+2023-11-19 12:23:23,763 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:23:23,767 [INFO] [usuario.py:229] - S
+2023-11-19 12:23:24,796 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:23:24,797 [INFO] [usuario.py:225] - 4
+2023-11-19 12:23:24,797 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:23:24,799 [INFO] [usuario.py:229] - S
+2023-11-19 12:23:38,602 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:23:38,604 [INFO] [usuario.py:225] - 4
+2023-11-19 12:23:38,606 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:23:38,614 [INFO] [usuario.py:229] - S
+2023-11-19 12:24:14,506 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:24:14,509 [INFO] [usuario.py:225] - 4
+2023-11-19 12:24:14,510 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:24:14,517 [INFO] [usuario.py:229] - S
+2023-11-19 12:24:34,527 [INFO] [usuario.py:224] - finaliza_carrinho
+2023-11-19 12:24:34,535 [INFO] [usuario.py:225] - 4
+2023-11-19 12:24:34,538 [INFO] [usuario.py:226] - inserir
+2023-11-19 12:24:34,544 [INFO] [usuario.py:229] - S
+2023-11-19 19:48:19,623 [INFO] [usuario.py:224] - cliente
+2023-11-19 19:48:19,628 [INFO] [usuario.py:225] - 4
+2023-11-19 19:48:19,629 [INFO] [usuario.py:226] - consultar
+2023-11-19 19:48:19,650 [INFO] [usuario.py:229] - S
+2023-11-19 19:55:40,580 [INFO] [usuario.py:224] - cliente
+2023-11-19 19:55:40,584 [INFO] [usuario.py:225] - 4
+2023-11-19 19:55:40,584 [INFO] [usuario.py:226] - consultar
+2023-11-19 19:55:40,594 [INFO] [usuario.py:229] - S
+2023-11-19 20:01:15,734 [INFO] [usuario.py:224] - cliente
+2023-11-19 20:01:15,738 [INFO] [usuario.py:225] - 4
+2023-11-19 20:01:15,738 [INFO] [usuario.py:226] - consultar
+2023-11-19 20:01:15,747 [INFO] [usuario.py:229] - S
+2023-11-19 20:01:36,200 [INFO] [usuario.py:224] - cliente
+2023-11-19 20:01:36,202 [INFO] [usuario.py:225] - 4
+2023-11-19 20:01:36,202 [INFO] [usuario.py:226] - inserir
+2023-11-19 20:01:36,211 [INFO] [usuario.py:229] - S
+2023-11-19 20:05:04,051 [INFO] [usuario.py:224] - cliente
+2023-11-19 20:05:04,055 [INFO] [usuario.py:225] - 4
+2023-11-19 20:05:04,056 [INFO] [usuario.py:226] - consultar
+2023-11-19 20:05:04,068 [INFO] [usuario.py:229] - S
+2023-11-20 13:32:12,125 [INFO] [usuario.py:224] - cliente
+2023-11-20 13:32:12,129 [INFO] [usuario.py:225] - 4
+2023-11-20 13:32:12,129 [INFO] [usuario.py:226] - consultar
+2023-11-20 13:32:12,169 [INFO] [usuario.py:229] - S
+2023-11-20 14:47:18,870 [INFO] [usuario.py:224] - cliente
+2023-11-20 14:47:18,875 [INFO] [usuario.py:225] - 4
+2023-11-20 14:47:18,875 [INFO] [usuario.py:226] - inserir
+2023-11-20 14:47:18,912 [INFO] [usuario.py:229] - S
+2023-11-20 14:56:05,729 [INFO] [usuario.py:224] - usuario
+2023-11-20 14:56:05,732 [INFO] [usuario.py:225] - 4
+2023-11-20 14:56:05,732 [INFO] [usuario.py:226] - consultar
+2023-11-20 14:56:05,740 [INFO] [usuario.py:229] - S
+2023-11-20 15:21:56,557 [INFO] [usuario.py:224] - S
+2023-11-20 15:35:55,017 [ERROR] [cliente.py:63] - Erro ao inserir cliente: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'RETURNING id_cliente' at line 3
+2023-11-20 15:42:42,806 [INFO] [usuario.py:220] - S
+2023-11-20 15:42:55,533 [INFO] [usuario.py:220] - S
+2023-11-20 15:43:43,651 [INFO] [usuario.py:220] - S
+2023-11-20 15:44:47,000 [INFO] [usuario.py:220] - S
+2023-11-20 16:00:38,229 [ERROR] [usuario.py:57] - Erro ao inserir usuário: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`usuario`, CONSTRAINT `usuario_FK` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`))
+2023-11-20 16:31:20,310 [ERROR] [cliente.py:64] - Erro ao inserir cliente: 1292 (22007): Incorrect date value: 'Nov 6, 1983 12:00 am' for column 'nascimento' at row 1
+2023-11-20 16:41:31,092 [ERROR] [cliente.py:64] - Erro ao inserir cliente: 1411 (HY000): Incorrect datetime value: 'Nov 6, 1983 12:00 am' for function str_to_date
+2023-11-20 16:43:06,883 [INFO] [cliente.py:44] - Nov 6, 1983 12:00 am
+2023-11-20 16:43:06,904 [ERROR] [cliente.py:64] - Erro ao inserir cliente: 1411 (HY000): Incorrect datetime value: 'Nov 6, 1983 12:00 am' for function str_to_date
+2023-11-20 16:45:16,535 [INFO] [cliente.py:44] - 11/02/82
+2023-11-20 16:45:17,015 [INFO] [usuario.py:220] - S
+2023-11-20 16:53:45,112 [INFO] [cliente.py:44] - 11/06/83
+2023-11-20 16:53:45,734 [INFO] [usuario.py:220] - S
+2023-11-20 16:53:47,041 [ERROR] [usuario.py:57] - Erro ao inserir usuário: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`usuario`, CONSTRAINT `usuario_FK` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`))
+2023-11-20 16:56:22,484 [INFO] [usuario.py:38] - 5
+2023-11-20 16:56:22,489 [ERROR] [usuario.py:57] - Erro ao inserir usuário: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`usuario`, CONSTRAINT `usuario_FK` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`))
+2023-11-20 17:00:06,117 [INFO] [usuario.py:38] - 5
+2023-11-20 17:00:06,121 [ERROR] [usuario.py:57] - Erro ao inserir usuário: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`usuario`, CONSTRAINT `usuario_FK` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`))
+2023-11-20 17:03:51,208 [INFO] [usuario.py:38] - 5
+2023-11-20 17:03:51,211 [ERROR] [usuario.py:57] - Erro ao inserir usuário: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`usuario`, CONSTRAINT `usuario_FK` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`))
+2023-11-20 17:07:45,474 [INFO] [usuario.py:38] - 1242231231, 2112434211, 123123
+2023-11-20 17:07:45,477 [ERROR] [usuario.py:57] - Erro ao inserir usuário: 1265 (01000): Data truncated for column 'id_cliente' at row 1
+2023-11-20 17:53:04,678 [ERROR] [usuario.py:54] - Erro ao inserir usuário: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 4 column 1 (char 49)
+2023-11-20 20:32:02,530 [ERROR] [login.py:53] - Erro durante o login: tuple index out of range
+2023-11-20 20:33:02,786 [ERROR] [login.py:53] - Erro durante o login: tuple index out of range
+2023-11-20 20:35:28,855 [ERROR] [login.py:55] - Erro durante o login: name 'execute_query' is not defined
+2023-11-20 20:38:54,171 [ERROR] [login.py:53] - Erro durante o login: tuple index out of range
+2023-11-20 20:42:14,103 [ERROR] [login.py:53] - Erro durante o login: 400 Bad Request: Failed to decode JSON object: Invalid control character at: line 2 column 32 (char 33)
+2023-11-20 20:45:12,835 [ERROR] [login.py:53] - Erro durante o login: tuple index out of range
+2023-11-20 22:59:13,149 [ERROR] [cliente.py:63] - Erro ao inserir cliente: 1411 (HY000): Incorrect datetime value: '2023-11-20' for function str_to_date
+2023-11-20 22:59:35,077 [ERROR] [cliente.py:63] - Erro ao inserir cliente: 1411 (HY000): Incorrect datetime value: '2023-11-20' for function str_to_date
+2023-11-20 23:01:02,634 [ERROR] [cliente.py:63] - Erro ao inserir cliente: 1292 (22007): Truncated incorrect date value: '20/11/2023'
+2023-11-20 23:01:25,774 [ERROR] [cliente.py:63] - Erro ao inserir cliente: 1292 (22007): Truncated incorrect date value: '20/11/2023'
+2023-11-20 23:02:45,238 [ERROR] [cliente.py:63] - Erro ao inserir cliente: 1411 (HY000): Incorrect datetime value: ''20/11/2023'' for function str_to_date
+2023-11-20 23:02:57,527 [ERROR] [cliente.py:63] - Erro ao inserir cliente: 1292 (22007): Truncated incorrect date value: '20/11/2023'
+2023-11-20 23:19:09,394 [ERROR] [cliente.py:64] - Erro ao inserir cliente: 1411 (HY000): Incorrect datetime value: 'Nov 6, 1983 12:00 am' for function str_to_date
+2023-11-20 23:22:57,193 [ERROR] [cliente.py:64] - Erro ao inserir cliente: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`cliente`, CONSTRAINT `cliente_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`))
+2023-11-20 23:24:03,776 [INFO] [cliente.py:44] - 13
+2023-11-20 23:24:03,797 [ERROR] [cliente.py:65] - Erro ao inserir cliente: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`db_coffeeshop`.`cliente`, CONSTRAINT `cliente_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`))
+2023-11-20 23:28:25,862 [INFO] [cliente.py:44] - 14
+2023-11-20 23:54:58,932 [INFO] [cliente.py:44] - 15
+2023-11-20 23:55:05,028 [INFO] [cliente.py:44] - 15
+2023-11-20 23:55:20,853 [INFO] [cliente.py:44] - 15
+2023-11-20 23:56:57,127 [INFO] [cliente.py:44] - 15
+2023-11-20 23:57:23,835 [INFO] [cliente.py:44] - 15
+2023-11-20 23:58:08,431 [INFO] [cliente.py:44] - 15
+2023-11-21 13:42:43,826 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:42:43,829 [INFO] [usuario.py:141] - 4
+2023-11-21 13:42:43,830 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:42:43,968 [INFO] [usuario.py:144] - N
+2023-11-21 13:47:01,076 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:47:01,081 [INFO] [usuario.py:141] - 4
+2023-11-21 13:47:01,081 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:47:01,111 [INFO] [usuario.py:144] - N
+2023-11-21 13:53:58,047 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:53:58,054 [INFO] [usuario.py:141] - 1
+2023-11-21 13:53:58,055 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:53:58,073 [INFO] [usuario.py:144] - N
+2023-11-21 13:53:59,066 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:53:59,067 [INFO] [usuario.py:141] - 1
+2023-11-21 13:53:59,067 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:53:59,071 [INFO] [usuario.py:144] - N
+2023-11-21 13:54:00,174 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:54:00,175 [INFO] [usuario.py:141] - 1
+2023-11-21 13:54:00,177 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:54:00,179 [INFO] [usuario.py:144] - N
+2023-11-21 13:54:03,173 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:54:03,174 [INFO] [usuario.py:141] - 1
+2023-11-21 13:54:03,174 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:54:03,178 [INFO] [usuario.py:144] - N
+2023-11-21 13:54:12,998 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:54:13,000 [INFO] [usuario.py:141] - 1
+2023-11-21 13:54:13,000 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:54:13,012 [INFO] [usuario.py:144] - N
+2023-11-21 13:54:17,544 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:54:17,546 [INFO] [usuario.py:141] - 1
+2023-11-21 13:54:17,548 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:54:17,555 [INFO] [usuario.py:144] - N
+2023-11-21 13:59:09,738 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:59:09,743 [INFO] [usuario.py:141] - 1
+2023-11-21 13:59:09,743 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:59:09,752 [INFO] [usuario.py:144] - N
+2023-11-21 13:59:10,808 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:59:10,809 [INFO] [usuario.py:141] - 1
+2023-11-21 13:59:10,810 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:59:10,812 [INFO] [usuario.py:144] - N
+2023-11-21 13:59:47,792 [INFO] [usuario.py:140] - cliente
+2023-11-21 13:59:47,793 [INFO] [usuario.py:141] - 1
+2023-11-21 13:59:47,794 [INFO] [usuario.py:142] - consultar
+2023-11-21 13:59:47,802 [INFO] [usuario.py:144] - N
+2023-11-21 14:00:38,739 [INFO] [usuario.py:140] - cliente
+2023-11-21 14:00:38,744 [INFO] [usuario.py:141] - 1
+2023-11-21 14:00:38,744 [INFO] [usuario.py:142] - excluir
+2023-11-21 14:00:38,757 [INFO] [usuario.py:144] - N
+2023-11-21 20:14:05,544 [INFO] [usuario.py:140] - cliente
+2023-11-21 20:14:05,546 [INFO] [usuario.py:141] - 1
+2023-11-21 20:14:05,546 [INFO] [usuario.py:142] - excluir
+2023-11-21 20:14:05,562 [INFO] [usuario.py:144] - N
+2023-11-21 20:14:10,787 [INFO] [usuario.py:140] - cliente
+2023-11-21 20:14:10,800 [INFO] [usuario.py:141] - 1
+2023-11-21 20:14:10,802 [INFO] [usuario.py:142] - consultar
+2023-11-21 20:14:10,813 [INFO] [usuario.py:144] - N
+2023-11-21 20:40:07,371 [INFO] [usuario.py:140] - cliente
+2023-11-21 20:40:07,374 [INFO] [usuario.py:141] - 1
+2023-11-21 20:40:07,375 [INFO] [usuario.py:142] - consultar
+2023-11-21 20:40:07,398 [INFO] [usuario.py:144] - N
+2023-11-21 20:44:46,260 [INFO] [cliente.py:41] - 17
+2023-11-21 20:45:11,690 [INFO] [cliente.py:41] - 17
+2023-11-21 20:46:24,349 [INFO] [cliente.py:41] - 17
+2023-11-21 20:46:24,352 [ERROR] [cliente.py:62] - Erro ao inserir cliente: Not all parameters were used in the SQL statement
+2023-11-21 20:46:55,968 [INFO] [cliente.py:41] - 17
+2023-11-21 20:57:15,498 [ERROR] [cliente.py:62] - Erro ao inserir cliente: 1366 (HY000): Incorrect integer value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjoxNywiZW1haWwiOiJtYXJpYUBtYXJpYS5jb20ifQ.qrk_VC5c7SbhYdGRc0na2ksz-47bhIcP' for column 'id_usuario' at row 1
+2023-11-21 21:10:15,741 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:10:15,744 [INFO] [usuario.py:146] - 1
+2023-11-21 21:10:15,745 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:10:15,757 [INFO] [usuario.py:149] - N
+2023-11-21 21:10:59,633 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:10:59,635 [INFO] [usuario.py:146] - 1
+2023-11-21 21:10:59,636 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:10:59,644 [INFO] [usuario.py:149] - N
+2023-11-21 21:11:00,913 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:11:00,914 [INFO] [usuario.py:146] - 1
+2023-11-21 21:11:00,916 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:11:00,918 [INFO] [usuario.py:149] - N
+2023-11-21 21:13:37,212 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:13:37,216 [INFO] [usuario.py:146] - 1
+2023-11-21 21:13:37,217 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:13:37,248 [INFO] [usuario.py:149] - N
+2023-11-21 21:31:20,540 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:31:20,545 [INFO] [usuario.py:146] - 17
+2023-11-21 21:31:20,545 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:31:20,562 [INFO] [usuario.py:149] - N
+2023-11-21 21:33:26,373 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:33:26,376 [INFO] [usuario.py:146] - 17
+2023-11-21 21:33:26,376 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:33:26,387 [INFO] [usuario.py:149] - N
+2023-11-21 21:35:22,489 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:35:22,493 [INFO] [usuario.py:146] - 17
+2023-11-21 21:35:22,493 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:35:22,504 [INFO] [usuario.py:149] - N
+2023-11-21 21:36:42,922 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:36:42,927 [INFO] [usuario.py:146] - 17
+2023-11-21 21:36:42,928 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:36:42,940 [INFO] [usuario.py:149] - N
+2023-11-21 21:37:01,334 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:37:01,338 [INFO] [usuario.py:146] - 17
+2023-11-21 21:37:01,339 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:37:01,350 [INFO] [usuario.py:149] - N
+2023-11-21 21:38:04,123 [INFO] [usuario.py:145] - item
+2023-11-21 21:38:04,127 [INFO] [usuario.py:146] - 1
+2023-11-21 21:38:04,128 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:38:04,137 [INFO] [usuario.py:149] - N
+2023-11-21 21:39:20,057 [INFO] [usuario.py:145] - item
+2023-11-21 21:39:20,060 [INFO] [usuario.py:146] - 1
+2023-11-21 21:39:20,060 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:39:20,067 [INFO] [usuario.py:149] - N
+2023-11-21 21:39:24,839 [INFO] [usuario.py:145] - item
+2023-11-21 21:39:24,843 [INFO] [usuario.py:146] - 1
+2023-11-21 21:39:24,844 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:39:24,861 [INFO] [usuario.py:149] - S
+2023-11-21 21:39:36,985 [INFO] [usuario.py:145] - item
+2023-11-21 21:39:36,988 [INFO] [usuario.py:146] - 1
+2023-11-21 21:39:36,991 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:39:37,001 [INFO] [usuario.py:149] - S
+2023-11-21 21:40:22,754 [INFO] [usuario.py:145] - item
+2023-11-21 21:40:22,759 [INFO] [usuario.py:146] - 1
+2023-11-21 21:40:22,759 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:40:22,779 [INFO] [usuario.py:149] - S
+2023-11-21 21:41:18,070 [INFO] [usuario.py:145] - item
+2023-11-21 21:41:18,074 [INFO] [usuario.py:146] - 1
+2023-11-21 21:41:18,075 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:41:18,091 [INFO] [usuario.py:149] - S
+2023-11-21 21:41:23,709 [INFO] [usuario.py:145] - item
+2023-11-21 21:41:23,714 [INFO] [usuario.py:146] - 1
+2023-11-21 21:41:23,715 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:41:23,728 [INFO] [usuario.py:149] - S
+2023-11-21 21:43:30,685 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:43:30,691 [INFO] [usuario.py:146] - 1
+2023-11-21 21:43:30,691 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:43:30,703 [INFO] [usuario.py:149] - N
+2023-11-21 21:45:29,249 [INFO] [usuario.py:145] - item
+2023-11-21 21:45:29,253 [INFO] [usuario.py:146] - 4
+2023-11-21 21:45:29,253 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:45:29,265 [INFO] [usuario.py:149] - N
+2023-11-21 21:45:55,438 [INFO] [usuario.py:145] - item
+2023-11-21 21:45:55,441 [INFO] [usuario.py:146] - 1
+2023-11-21 21:45:55,442 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:45:55,450 [INFO] [usuario.py:149] - S
+2023-11-21 21:48:51,872 [INFO] [usuario.py:145] - item
+2023-11-21 21:48:51,875 [INFO] [usuario.py:146] - 17
+2023-11-21 21:48:51,875 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:48:51,890 [INFO] [usuario.py:149] - S
+2023-11-21 21:48:51,895 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:48:51,895 [INFO] [usuario.py:146] - 17
+2023-11-21 21:48:51,896 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:48:51,899 [INFO] [usuario.py:149] - N
+2023-11-21 21:50:24,228 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:50:24,232 [INFO] [usuario.py:146] - 17
+2023-11-21 21:50:24,232 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:50:24,245 [INFO] [usuario.py:149] - N
+2023-11-21 21:50:24,582 [INFO] [usuario.py:145] - item
+2023-11-21 21:50:24,583 [INFO] [usuario.py:146] - 17
+2023-11-21 21:50:24,583 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:50:24,585 [INFO] [usuario.py:149] - S
+2023-11-21 21:52:26,175 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:52:26,178 [INFO] [usuario.py:146] - 17
+2023-11-21 21:52:26,178 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:52:26,191 [INFO] [usuario.py:149] - N
+2023-11-21 21:52:26,619 [INFO] [usuario.py:145] - item
+2023-11-21 21:52:26,621 [INFO] [usuario.py:146] - 17
+2023-11-21 21:52:26,623 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:52:26,626 [INFO] [usuario.py:149] - S
+2023-11-21 21:53:05,491 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:53:05,495 [INFO] [usuario.py:146] - 17
+2023-11-21 21:53:05,495 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:53:05,510 [INFO] [usuario.py:149] - N
+2023-11-21 21:53:05,810 [INFO] [usuario.py:145] - item
+2023-11-21 21:53:05,811 [INFO] [usuario.py:146] - 17
+2023-11-21 21:53:05,811 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:53:05,814 [INFO] [usuario.py:149] - S
+2023-11-21 21:55:14,668 [INFO] [usuario.py:145] - item
+2023-11-21 21:55:14,673 [INFO] [usuario.py:146] - 17
+2023-11-21 21:55:14,674 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:55:14,687 [INFO] [usuario.py:149] - S
+2023-11-21 21:55:14,968 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:55:14,969 [INFO] [usuario.py:146] - 17
+2023-11-21 21:55:14,969 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:55:14,971 [INFO] [usuario.py:149] - N
+2023-11-21 21:56:49,034 [INFO] [usuario.py:145] - item
+2023-11-21 21:56:49,037 [INFO] [usuario.py:146] - 17
+2023-11-21 21:56:49,041 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:56:49,071 [INFO] [usuario.py:149] - S
+2023-11-21 21:56:49,199 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:56:49,201 [INFO] [usuario.py:146] - 17
+2023-11-21 21:56:49,201 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:56:49,205 [INFO] [usuario.py:149] - N
+2023-11-21 21:57:27,741 [INFO] [usuario.py:145] - item
+2023-11-21 21:57:27,744 [INFO] [usuario.py:146] - 17
+2023-11-21 21:57:27,747 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:57:27,760 [INFO] [usuario.py:145] - cliente
+2023-11-21 21:57:27,761 [INFO] [usuario.py:149] - S
+2023-11-21 21:57:27,761 [INFO] [usuario.py:146] - 17
+2023-11-21 21:57:27,763 [INFO] [usuario.py:147] - consultar
+2023-11-21 21:57:27,765 [INFO] [usuario.py:149] - N
+2023-11-21 21:57:51,651 [INFO] [usuario.py:145] - item
