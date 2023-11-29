@@ -17,9 +17,30 @@ def obter_usuarios(payload):
     
     try:
         if id_usuario:
-            query = f"SELECT * FROM usuario WHERE id_usuario = '{id_usuario}'"
+            query = f"""
+                     select u.id_usuario,
+                            u.data_cadastro,
+                            u.email,
+                            u.status,
+                            c.id_cliente,
+                            f.id_funcionario
+                        from usuario u 
+                        left join cliente c on c.id_usuario = u.id_usuario
+                        left join funcionario f on f.id_usuario = u.id_usuario 
+                        WHERE id_usuario = '{id_usuario}
+                    """
         else:
-            query = "SELECT * FROM usuario"
+            query = """
+                     select u.id_usuario,
+                            u.data_cadastro,
+                            u.email,
+                            u.status,
+                            c.id_cliente,
+                            f.id_funcionario
+                        from usuario u 
+                        left join cliente c on c.id_usuario = u.id_usuario
+                        left join funcionario f on f.id_usuario = u.id_usuario
+                    """
 
         resultado = conexao.execute_query(query)
 
@@ -142,11 +163,7 @@ def verifica_acesso(id_usuario, tipo, acesso):
                         end = 'S';
                 """
         params = (acesso, id_usuario, tipo, tipo, tipo, tipo)
-        logger.info(acesso)
-        logger.info(id_usuario)
-        logger.info(tipo)
         resultado = conexao.execute_query(query, params)
-        logger.info(resultado[0][0])
         return resultado[0][0] == 'S'
     except Exception as e:
         logger.error(f"Erro ao verificar acesso: {str(e)}")

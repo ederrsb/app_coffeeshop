@@ -24,10 +24,13 @@ def obter_carrinhos_cliente(payload, id_cliente):
                            i.descricao,
                            i.unid_medida,
                            c.quantidade,
-                           c.data_atualizacao
+                           c.data_atualizacao,
+                           c.valor_unitario,
+                           c.valor_desconto,
+                           c.valor_total_item
                       from carrinho c 
                       join cliente c2 on c2.id_cliente  = c.id_cliente 
-                      join Item i on i.id_item = c.id_item
+                      join item i on i.id_item = c.id_item
                      where c.id_cliente = %s
                 '''
         resultado = conexao.execute_query(query, (id_cliente,))
@@ -53,14 +56,17 @@ def inserir_carrinho(payload):
         dados_carrinho = request.get_json()
 
         query = """
-                INSERT INTO db_coffeeshop.carrinho (id_cliente, id_item, quantidade, data_atualizacao)
-                VALUES (%s, %s, %s, now())
+                INSERT INTO db_coffeeshop.carrinho (id_cliente, id_item, quantidade, data_atualizacao, valor_unitario, valor_desconto, valor_total_item)
+                VALUES (%s, %s, %s, now(), %s, %s, %s)
                 """
 
         params = (
             dados_carrinho['id_cliente'],
             dados_carrinho['id_item'],
             dados_carrinho['quantidade'],
+            dados_carrinho['valor_unitario'],
+            dados_carrinho['valor_desconto'],
+            dados_carrinho['valor_total_item'],
         )
 
         conexao.execute_query(query, params)
@@ -68,6 +74,7 @@ def inserir_carrinho(payload):
 
         return jsonify({'message': 'Carrinho inserido com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir carrinho: {str(e)}")
         return jsonify({'message': 'Erro ao inserir carrinho'}), 500
 
@@ -83,11 +90,14 @@ def atualizar_carrinho(payload, id_cliente, id_item):
 
         query = """
                 UPDATE db_coffeeshop.carrinho
-                SET quantidade = %s, data_atualizacao = now()
+                SET quantidade = %s, 
+                    data_atualizacao = now(),
+                    valor_total_item = %s * (valor_unitario - valor_desconto)
                 WHERE id_cliente = %s AND id_item = %s
                 """
 
         params = (
+            dados_carrinho['quantidade'],
             dados_carrinho['quantidade'],
             id_cliente,
             id_item,
@@ -98,6 +108,7 @@ def atualizar_carrinho(payload, id_cliente, id_item):
 
         return jsonify({'message': 'Carrinho atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar carrinho: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar carrinho'}), 500
 
@@ -117,6 +128,7 @@ def deletar_carrinho(payload, id_cliente, id_item):
 
         return jsonify({'message': 'Carrinho deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar carrinho: {str(e)}")
         return jsonify({'message': 'Erro ao deletar carrinho'}), 500
 
@@ -197,5 +209,6 @@ def finaliza_carrinho(payload, id_cliente):
 
         return jsonify({'message': 'Carrinho finalizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao finalizar carrinho: {str(e)}")
         return jsonify({'message': 'Erro ao finalizar carrinho'}), 500

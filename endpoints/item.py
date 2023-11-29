@@ -56,6 +56,7 @@ def inserir_item(payload):
 
         return jsonify({'message': 'Item inserido com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir item: {str(e)}")
         return jsonify({'message': 'Erro ao inserir item'}), 500
 
@@ -89,6 +90,7 @@ def atualizar_item(payload, id_item):
 
         return jsonify({'message': 'Item atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar item: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar item'}), 500
 
@@ -108,6 +110,7 @@ def deletar_item(payload, id_item):
 
         return jsonify({'message': 'Item deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar item: {str(e)}")
         return jsonify({'message': 'Erro ao deletar item'}), 500
 
@@ -146,51 +149,56 @@ def obter_itens2():
     # Constrói a cláusula WHERE combinando as condições com 'AND'
     where_clause = "".join(conditions) if conditions else ""
 
-    # Constrói a consulta SQL com a cláusula WHERE
-    query = f"""
-        select *
-          from (select i.id_item,
-                       i.descricao as desc_item,
-                       i.unid_medida,
-                       i.id_item_categoria,
-                       ic.descricao as desc_categoria,
-                       i.valor_unitario,
-                       i.data_atualizacao,
-                       i.status,
-                       coalesce((select sum(coalesce(ice.saldo, 0))
-                                   from item_conta_estoque ice
-                                   where ice.id_item = i.id_item), 0) as saldo,
+    try:
+        query = f"""
+            select *
+            from (select i.id_item,
+                        i.descricao as desc_item,
+                        i.descricao_completa as descricao_completa,
+                        i.unid_medida,
+                        i.id_item_categoria,
+                        ic.descricao as desc_categoria,
+                        i.valor_unitario,
+                        i.data_atualizacao,
+                        i.status,
+                        coalesce((select sum(coalesce(ice.saldo, 0))
+                                    from item_conta_estoque ice
+                                    where ice.id_item = i.id_item), 0) as saldo,
                         i.imagem
-                   from item i 
-                   join item_categoria ic on i.id_item_categoria = ic.id_item_categoria) a  
-         where 1=1 {where_clause}
-         order by 1
-    """
+                    from item i 
+                    join item_categoria ic on i.id_item_categoria = ic.id_item_categoria) a  
+            where 1=1 {where_clause}
+            order by 1
+        """
 
-    # Parâmetros a serem passados na consulta
-    params = [id_item, id_item_categoria, status, sn_saldo]
+        # Parâmetros a serem passados na consulta
+        params = [id_item, id_item_categoria, status, sn_saldo]
 
-    if desc_item:
-        params.append(f"%{desc_item}%")
+        if desc_item:
+            params.append(f"%{desc_item}%")
 
-    if desc_categoria:
-        params.append(f"%{desc_categoria}%")
+        if desc_categoria:
+            params.append(f"%{desc_categoria}%")
 
-    # Remove None da lista de parâmetros para os que não foram fornecidos
-    params = [param for param in params if param is not None]
+        # Remove None da lista de parâmetros para os que não foram fornecidos
+        params = [param for param in params if param is not None]
 
-    # Executa a consulta SQL
-    resultado = conexao.execute_query(query, params)
+        # Executa a consulta SQL
+        resultado = conexao.execute_query(query, params)
 
-    if resultado:
-        colunas = [column[0] for column in conexao.cursor.description]
-        # Converter bytes para base64 antes de criar o dicionário
-        itens = []
-        for item in resultado:
-            item_dict = dict(zip(colunas, item))
-            if 'imagem' in item_dict and item_dict['imagem'] is not None:
-                item_dict['imagem'] = base64.b64encode(item_dict['imagem']).decode('utf-8')
-            itens.append(item_dict)
-        return jsonify(itens)
-    else:
-        return jsonify({'message': 'Item encontrada'}), 404
+        if resultado:
+            colunas = [column[0] for column in conexao.cursor.description]
+            # Converter bytes para base64 antes de criar o dicionário
+            itens = []
+            for item in resultado:
+                item_dict = dict(zip(colunas, item))
+                if 'imagem' in item_dict and item_dict['imagem'] is not None:
+                    item_dict['imagem'] = base64.b64encode(item_dict['imagem']).decode('utf-8')
+                itens.append(item_dict)
+            return jsonify(itens)
+        else:
+            return jsonify([])
+        
+    except Exception as e:
+        logger.error(f"Erro ao obter itens: {str(e)}")
+        return jsonify({'message': 'Erro ao obter itens'}), 500
