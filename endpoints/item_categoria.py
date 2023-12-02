@@ -53,6 +53,7 @@ def inserir_item_categoria(payload):
 
         return jsonify({'message': 'Categoria de item inserida com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir categoria de item: {str(e)}")
         return jsonify({'message': 'Erro ao inserir categoria de item'}), 500
 
@@ -82,6 +83,7 @@ def atualizar_item_categoria(payload, id_item_categoria):
 
         return jsonify({'message': 'Categoria de item atualizada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar categoria de item: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar categoria de item'}), 500
 
@@ -101,5 +103,6 @@ def deletar_item_categoria(payload, id_item_categoria):
 
         return jsonify({'message': 'Categoria de item deletada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar categoria de item: {str(e)}")
         return jsonify({'message': 'Erro ao deletar categoria de item'}), 500

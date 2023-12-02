@@ -149,6 +149,7 @@ def inserir_assinatura(payload):
 
         return jsonify({'message': 'Assinatura inserida com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir assinatura: {str(e)}")
         return jsonify({'message': 'Erro ao inserir assinatura'}), 500
 
@@ -181,6 +182,7 @@ def atualizar_assinatura(payload, id_assinatura):
 
         return jsonify({'message': 'Assinatura atualizada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar assinatura: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar assinatura'}), 500
 
@@ -200,6 +202,7 @@ def deletar_assinatura(payload, id_assinatura):
 
         return jsonify({'message': 'Assinatura deletada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar assinatura: {str(e)}")
         return jsonify({'message': 'Erro ao deletar assinatura'}), 500
 
@@ -229,6 +232,7 @@ def inserir_assinatura_item(payload):
 
         return jsonify({'message': 'Item de assinatura inserido com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir item de assinatura: {str(e)}")
         return jsonify({'message': 'Erro ao inserir item de assinatura'}), 500
 
@@ -259,6 +263,7 @@ def atualizar_assinatura_item(payload, id_assinatura, id_item):
 
         return jsonify({'message': 'Item de assinatura atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar item de assinatura: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar item de assinatura'}), 500
 
@@ -278,5 +283,6 @@ def deletar_assinatura_item(payload, id_assinatura, id_item):
 
         return jsonify({'message': 'Item de assinatura deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar item de assinatura: {str(e)}")
         return jsonify({'message': 'Erro ao deletar item de assinatura'}), 500

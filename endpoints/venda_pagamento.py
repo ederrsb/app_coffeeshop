@@ -58,6 +58,7 @@ def inserir_venda_pagamento(payload):
 
         return jsonify({'message': 'Venda Pagamento inserido com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir venda_pagamento: {str(e)}")
         return jsonify({'message': 'Erro ao inserir venda_pagamento'}), 500
 
@@ -90,6 +91,7 @@ def atualizar_venda_pagamento(payload, id_venda, forma_pagamento):
 
         return jsonify({'message': 'Venda Pagamento atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar venda_pagamento: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar venda_pagamento'}), 500
 
@@ -109,5 +111,6 @@ def deletar_venda_pagamento(payload, id_venda, forma_pagamento):
 
         return jsonify({'message': 'Venda Pagamento deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar venda_pagamento: {str(e)}")
         return jsonify({'message': 'Erro ao deletar venda_pagamento'}), 500

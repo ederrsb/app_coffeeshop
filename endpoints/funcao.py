@@ -54,6 +54,7 @@ def inserir_funcao(payload):
 
         return jsonify({'message': 'Função inserida com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir função: {str(e)}")
         return jsonify({'message': 'Erro ao inserir função'}), 500
 
@@ -84,6 +85,7 @@ def atualizar_funcao(payload, id_funcao):
 
         return jsonify({'message': 'Função atualizada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar função: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar função'}), 500
 
@@ -103,5 +105,6 @@ def deletar_funcao(payload, id_funcao):
 
         return jsonify({'message': 'Função deletada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar função: {str(e)}")
         return jsonify({'message': 'Erro ao deletar função'}), 500

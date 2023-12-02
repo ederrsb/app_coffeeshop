@@ -13,10 +13,27 @@ conexao = Conexao()
 def obter_enderecos_cliente(payload, id_cliente):
     id_usuario = payload['id_usuario']
     if not verifica_acesso(id_usuario, request.method, 'cliente_endereco'):
-        return jsonify({'message': 'Usuário não possui acesso a consultar Endereço de Cliente'}), 403
+       id_usuario = '' 
     
     try:
-        query = 'SELECT * FROM cliente_endereco WHERE id_cliente = %s'
+        if id_usuario:
+            query = f'''
+                    select ce.*
+                      from cliente_endereco ce,
+                           cliente c 
+                     where ce.id_cliente = c.id_cliente 
+                       and ce.id_cliente = %s
+                       and c.id_usuario  = {id_usuario}
+                     '''
+        else:
+            query = '''
+                    select ce.*
+                      from cliente_endereco ce,
+                           cliente c 
+                     where ce.id_cliente = c.id_cliente 
+                       and ce.id_cliente = %s
+                     '''
+
         resultado = conexao.execute_query(query, (id_cliente,))
 
         if resultado:
@@ -34,7 +51,7 @@ def obter_enderecos_cliente(payload, id_cliente):
 def inserir_endereco_cliente(payload):
     id_usuario = payload['id_usuario']
     if not verifica_acesso(id_usuario, request.method, 'cliente_endereco'):
-        return jsonify({'message': 'Usuário não possui acesso a inserir Endereço de Cliente'}), 403
+       id_usuario = '' 
     
     try:
         dados_endereco = request.get_json()
@@ -61,6 +78,7 @@ def inserir_endereco_cliente(payload):
 
         return jsonify({'message': 'Endereço do cliente inserido com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir endereço do cliente: {str(e)}")
         return jsonify({'message': 'Erro ao inserir endereço do cliente'}), 500
 
@@ -97,6 +115,7 @@ def atualizar_endereco_cliente(payload, id_cliente, seq):
 
         return jsonify({'message': 'Endereço do cliente atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar endereço do cliente: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar endereço do cliente'}), 500
 
@@ -116,5 +135,6 @@ def deletar_endereco_cliente(payload, id_cliente, seq):
 
         return jsonify({'message': 'Endereço do cliente deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar endereço do cliente: {str(e)}")
         return jsonify({'message': 'Erro ao deletar endereço do cliente'}), 500

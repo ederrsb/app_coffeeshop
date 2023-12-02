@@ -58,6 +58,7 @@ def inserir_funcao_acesso(payload):
 
         return jsonify({'message': 'Função Acesso inserida com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir função de acesso: {str(e)}")
         return jsonify({'message': 'Erro ao inserir função de acesso'}), 500
 
@@ -91,6 +92,7 @@ def atualizar_funcao_acesso(payload, id_funcao, id_acesso):
 
         return jsonify({'message': 'Função Acesso atualizada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar função de acesso: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar função de acesso'}), 500
 
@@ -110,5 +112,6 @@ def deletar_funcao_acesso(payload, id_funcao, id_acesso):
 
         return jsonify({'message': 'Função Acesso deletada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar função de acesso: {str(e)}")
         return jsonify({'message': 'Erro ao deletar função de acesso'}), 500

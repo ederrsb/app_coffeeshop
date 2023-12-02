@@ -54,7 +54,7 @@ def obter_venda(payload, id_venda):
 def obter_venda_item(payload):
     id_usuario = payload['id_usuario']
     if not verifica_acesso(id_usuario, request.method, 'venda_item'):
-        return jsonify({'message': 'Usuário não possui acesso a consulta de Item de Venda'}), 403
+       id_usuario = '' 
     
     try:
         tipo = request.args.get('tipo')
@@ -77,6 +77,9 @@ def obter_venda_item(payload):
 
         if data:
             conditions.append("and v.data = %s")
+
+        if id_usuario:
+            conditions.append("and c.id_usuario = %s")
 
         # Constrói a cláusula WHERE combinando as condições com 'AND'
         where_clause = "".join(conditions) if conditions else ""
@@ -108,11 +111,11 @@ def obter_venda_item(payload):
                   left join assinatura a on vi.id_assinatura = a.id_assinatura 
                   left join venda_pagamento vp on vp.id_venda = v.id_venda
                  where 1=1 {where_clause}
-                 order by 1, 2, 3
+                 order by 1, 2 desc, 3
                 """
 
         # Parâmetros a serem passados na consulta
-        params = [tipo, id_venda, id_cliente, data]
+        params = [tipo, id_venda, id_cliente, data, id_usuario]
 
         # Remove None da lista de parâmetros para os que não foram fornecidos
         params = [param for param in params if param is not None]
@@ -142,13 +145,11 @@ def inserir_venda(payload):
 
         query = """
                     INSERT INTO venda (id_cliente, id_funcionario, data, valor_total_venda)
-                    VALUES (%s, %s, %s, %s)
+                    VALUES (%s, null, now(), %s)
                 """
 
         params = (
             dados_venda['id_cliente'],
-            dados_venda['id_funcionario'],
-            dados_venda['data'],
             dados_venda['valor_total_venda']
         )
 
@@ -157,6 +158,7 @@ def inserir_venda(payload):
 
         return jsonify({'message': 'Venda inserida com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir venda: {str(e)}")
         return jsonify({'message': 'Erro ao inserir venda'}), 500
 
@@ -192,6 +194,7 @@ def atualizar_venda(payload, id_venda):
 
         return jsonify({'message': 'Venda atualizada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar venda: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar venda'}), 500
 
@@ -211,6 +214,7 @@ def deletar_venda(payload, id_venda):
 
         return jsonify({'message': 'Venda deletada com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao excluir venda: {str(e)}")
         return jsonify({'message': 'Erro ao excluir venda'}), 500
 
@@ -245,6 +249,7 @@ def inserir_venda_item(payload):
 
         return jsonify({'message': 'Item de venda inserido com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir item da venda: {str(e)}")
         return jsonify({'message': 'Erro ao inserir item da venda'}), 500
 
@@ -285,6 +290,7 @@ def atualizar_venda_item(payload, id_venda, item):
 
         return jsonify({'message': 'Item de venda atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar item da venda: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar item da venda'}), 500
 
@@ -304,5 +310,6 @@ def deletar_venda_item(payload, id_venda, item):
 
         return jsonify({'message': 'Item de venda deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao excluir item da venda: {str(e)}")
         return jsonify({'message': 'Erro ao excluir item da venda'}), 500

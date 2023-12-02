@@ -12,7 +12,7 @@ conexao = Conexao()
 def obter_usuarios(payload):
     id_usuario = payload['id_usuario']
     # Se não tem acesso poderá consultar apenas o próprio
-    if verifica_acesso(id_usuario, request.method, 'cliente'):
+    if verifica_acesso(id_usuario, request.method, 'usuario'):
        id_usuario = '' 
     
     try:
@@ -27,7 +27,7 @@ def obter_usuarios(payload):
                         from usuario u 
                         left join cliente c on c.id_usuario = u.id_usuario
                         left join funcionario f on f.id_usuario = u.id_usuario 
-                        WHERE id_usuario = '{id_usuario}
+                        WHERE u.id_usuario = '{id_usuario}'
                     """
         else:
             query = """
@@ -54,6 +54,9 @@ def obter_usuarios(payload):
         logger.error(f"Erro ao obter usuários: {str(e)}")
         return jsonify({'message': 'Erro ao obter usuários'}), 500
     
+from flask import Blueprint, jsonify, request
+import bcrypt
+
 @usuario_bp.route('/usuarios', methods=['POST'])
 def inserir_usuario():
     try:
@@ -62,23 +65,39 @@ def inserir_usuario():
         # Adicione a criptografia para a senha
         senha_hashed = bcrypt.hashpw(dados_usuario['senha'].encode('utf-8'), bcrypt.gensalt())
 
-        query = """
-                INSERT INTO db_coffeeshop.usuario (data_cadastro, email, senha, status)
-                VALUES (now(), %s, %s, 'A')
-                """
+        # Insere o usuário
+        query_inserir = """
+            INSERT INTO db_coffeeshop.usuario (data_cadastro, email, senha, status)
+            VALUES (now(), %s, %s, 'A')
+        """
 
-        params = (
+        params_inserir = (
             dados_usuario['email'],
             senha_hashed
         )
 
-        conexao.execute_query(query, params)
+        conexao.execute_query(query_inserir, params_inserir)
         conexao.connection.commit()
 
-        return jsonify({'message': 'Usuário inserido com sucesso'}), 201
+        # Consulta o ID do usuário recém-inserido
+        query_id_usuario = "SELECT LAST_INSERT_ID() as id_usuario"
+        resultado_id_usuario = conexao.execute_query(query_id_usuario)
+
+        if resultado_id_usuario:
+            # Obtemos o ID do usuário a partir da tupla retornada
+            id_usuario = resultado_id_usuario[0][0]
+            return jsonify({'id_usuario': id_usuario, 'message': 'Usuário inserido com sucesso'}), 201
+        else:
+            # Trate o caso em que não foi possível obter o ID do usuário
+            return jsonify({'message': 'Erro ao obter o ID do usuário'}), 500
+
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir usuário: {str(e)}")
         return jsonify({'message': 'Erro ao inserir usuário'}), 500
+
+
+
 
 @usuario_bp.route('/usuarios/<int:id_usuario>', methods=['PUT'])
 @verifica_token
@@ -111,6 +130,7 @@ def atualizar_usuario(payload, id_usuario):
 
         return jsonify({'message': 'Usuário atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar usuário: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar usuário'}), 500
 
@@ -130,6 +150,7 @@ def deletar_usuario(payload, id_usuario):
 
         return jsonify({'message': 'Usuário deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar usuário: {str(e)}")
         return jsonify({'message': 'Erro ao deletar usuário'}), 500
     

@@ -56,6 +56,7 @@ def inserir_item_conta_estoque(payload):
 
         return jsonify({'message': 'Item de conta de estoque inserido com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir item de conta de estoque: {str(e)}")
         return jsonify({'message': 'Erro ao inserir item de conta de estoque'}), 500
 
@@ -88,6 +89,7 @@ def atualizar_item_conta_estoque(payload, id_item, id_conta_estoque):
 
         return jsonify({'message': 'Item de conta de estoque atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar item de conta de estoque: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar item de conta de estoque'}), 500
 
@@ -107,5 +109,6 @@ def deletar_item_conta_estoque(payload, id_item, id_conta_estoque):
 
         return jsonify({'message': 'Item de conta de estoque deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar item de conta de estoque: {str(e)}")
         return jsonify({'message': 'Erro ao deletar item de conta de estoque'}), 500

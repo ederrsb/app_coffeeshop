@@ -56,6 +56,7 @@ def inserir_funcionario(payload):
 
         return jsonify({'message': 'Funcionário inserido com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir funcionário: {str(e)}")
         return jsonify({'message': 'Erro ao inserir funcionário'}), 500
 
@@ -88,6 +89,7 @@ def atualizar_funcionario(payload, id_funcionario):
 
         return jsonify({'message': 'Funcionário atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar funcionário: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar funcionário'}), 500
 
@@ -107,5 +109,6 @@ def deletar_funcionario(payload, id_funcionario):
 
         return jsonify({'message': 'Funcionário deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar funcionário: {str(e)}")
         return jsonify({'message': 'Erro ao deletar funcionário'}), 500

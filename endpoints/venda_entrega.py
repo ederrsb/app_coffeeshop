@@ -58,6 +58,7 @@ def inserir_vendas_entrega(payload):
 
         return jsonify({'message': 'Dados de Entrega inseridos com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir dados de entrega: {str(e)}")
         return jsonify({'message': 'Erro ao inserir dados de entrega'}), 500
 
@@ -91,6 +92,7 @@ def atualizar_vendas_entrega(payload, id_venda):
 
         return jsonify({'message': 'Dados de Entrega atualizados com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar dados de entrega: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar dados de entrega'}), 500
 
@@ -110,5 +112,6 @@ def deletar_vendas_entrega(payload, id_venda):
 
         return jsonify({'message': 'Dados de Entrega excluídos com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao excluir dados de entrega: {str(e)}")
         return jsonify({'message': 'Erro ao excluir dados de entrega'}), 500

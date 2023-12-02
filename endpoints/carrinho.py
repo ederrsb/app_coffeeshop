@@ -14,10 +14,29 @@ conexao = Conexao()
 def obter_carrinhos_cliente(payload, id_cliente):
     id_usuario = payload['id_usuario']
     if not verifica_acesso(id_usuario, request.method, 'carrinho'):
-        return jsonify({'message': 'Usuário não possui acesso a consultar Carrinho'}), 403
+       id_usuario = '' 
     
     try:
-        query = '''
+        if id_usuario:
+            query = f'''
+                    select c.id_cliente,
+                           c2.nome,
+                           c.id_item,
+                           i.descricao,
+                           i.unid_medida,
+                           c.quantidade,
+                           c.data_atualizacao,
+                           c.valor_unitario,
+                           c.valor_desconto,
+                           c.valor_total_item
+                      from carrinho c 
+                      join cliente c2 on c2.id_cliente  = c.id_cliente 
+                      join item i on i.id_item = c.id_item
+                     where c.id_cliente = %s
+                       and c2.id_usuario = '{id_usuario}'
+                '''
+        else:
+            query = '''
                     select c.id_cliente,
                            c2.nome,
                            c.id_item,
@@ -184,7 +203,7 @@ def finaliza_carrinho(payload, id_cliente):
             INSERT INTO db_coffeeshop.venda_item (id_venda, item, id_item, quantidade, valor_unitario, valor_desconto, valor_total_item)
             SELECT %s, ci.id_item, ci.id_item, ci.quantidade, ci.valor_unitario, ci.valor_desconto, ci.valor_total_item
             FROM carrinho ci
-            JOIN Item it ON ci.id_item = it.id_item
+            JOIN item it ON ci.id_item = it.id_item
             WHERE ci.id_cliente = %s
         """
         params_inserir_venda_item = (id_venda, id_cliente)
@@ -207,7 +226,8 @@ def finaliza_carrinho(payload, id_cliente):
         conexao.execute_query(query_limpar_carrinho, (id_cliente,))
         conexao.connection.commit()
 
-        return jsonify({'message': 'Carrinho finalizado com sucesso'}), 200
+        return jsonify({'message': 'Carrinho finalizado com sucesso',
+                        'id_venda': id_venda}), 200
     except Exception as e:
         conexao.connection.rollback()
         logger.error(f"Erro ao finalizar carrinho: {str(e)}")

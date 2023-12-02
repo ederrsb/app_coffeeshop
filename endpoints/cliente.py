@@ -59,6 +59,7 @@ def inserir_cliente():
 
         return jsonify({'message': 'Cliente inserido com sucesso'}), 201
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao inserir cliente: {str(e)}")
         return jsonify({'message': 'Erro ao inserir cliente'}), 500
 
@@ -101,6 +102,7 @@ def atualizar_cliente(payload, id_cliente):
 
         return jsonify({'message': 'Cliente atualizado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao atualizar cliente: {str(e)}")
         return jsonify({'message': 'Erro ao atualizar cliente'}), 500
 
@@ -120,5 +122,6 @@ def deletar_cliente(payload, id_cliente):
 
         return jsonify({'message': 'Cliente deletado com sucesso'}), 200
     except Exception as e:
+        conexao.connection.rollback()
         logger.error(f"Erro ao deletar cliente: {str(e)}")
         return jsonify({'message': 'Erro ao deletar cliente'}), 500
